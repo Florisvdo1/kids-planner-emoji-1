@@ -1,0 +1,119 @@
+Certainly! I understand that you’d like to refine the prompt for Replit’s agent LLM so that, instead of using external .svg image files, the app uses code-based methods (such as CSS, HTML, and inline SVG code) to create the images for the logo, Huiswerk button icons, and other visual elements.
+
+Here is the refined prompt tailored for Replit’s agent LLM:
+
+Project Title: Emoji Dagplanner
+
+Description:
+
+Create a fully functional mobile web application called Emoji Dagplanner. This app helps users plan their day using emojis in an interactive and visually appealing interface.
+
+Key Requirements:
+	1.	Main Features:
+	•	Emoji Placeholders:
+	•	Users can drag and drop emojis into placeholders to represent activities they plan to do.
+	•	An initial placeholder is present, with a “+” button next to it allowing users to add up to 5 placeholders.
+	•	Ensure there is exactly 2px space between the placeholder and the “+” button.
+	•	Add Placeholders:
+	•	The “+” button allows users to add additional placeholders.
+	•	The maximum number of placeholders is 5.
+	•	The “+” button should be styled using code (CSS and HTML) to match the design specifications.
+	•	Huiswerk Button:
+	•	A toggle button represented by an icon created using code (e.g., CSS shapes, inline SVG code within HTML).
+	•	When the user taps the button to confirm homework is checked, the icon changes to represent the active state.
+	•	Tapping the button again toggles it back to the original icon, representing the inactive state.
+	•	Day Rating:
+	•	Users can rate their day using emoji buttons.
+	•	Emoji options include 😱, 😕, 😐, 🙂, 😄.
+	•	Selecting an emoji highlights it, and only one can be selected at a time.
+	•	Reset Button:
+	•	Clears all selections and resets the app to its initial state.
+	•	Resets placeholders, the Huiswerk button, and the day rating.
+	•	The reset icon should be created using code (CSS and HTML), avoiding external image files.
+	2.	Emoji Deck:
+	•	Displays a grid of emojis categorized into groups: smileys, animals, nature, food, activities, travel, objects, symbols, and flags.
+	•	Users can navigate between categories using left and right arrow buttons, created using code (e.g., CSS shapes, inline SVG code).
+	•	The category name is displayed between the navigation buttons.
+	•	Includes an emoji search bar to filter emojis by name.
+	•	The emoji data should include full lists as per the categories.
+	3.	Responsive Design:
+	•	The app should be fully responsive and optimized for mobile devices.
+	•	Ensure precise spacing and sizing for all elements.
+	•	Use media queries to adjust layouts for different screen sizes.
+	4.	Visual Elements Created Using Code:
+	•	Logo:
+	•	Create the app logo using code, such as CSS and HTML elements, or inline SVG code directly within the HTML file.
+	•	The logo should be visually appealing and represent the theme of the app.
+	•	Huiswerk Button Icons:
+	•	Design the Huiswerk button icons (both active and inactive states) using code-based methods.
+	•	Use CSS transformations, pseudo-elements, or inline SVG to create the icons without external image files.
+	•	Navigation Arrows:
+	•	Create the left and right arrow icons using CSS shapes or inline SVG code.
+	•	Ensure the arrows are clear and user-friendly.
+	•	Cloud Background Animation:
+	•	Implement moving cloud animations in the background using code (CSS animations and HTML elements).
+	•	Use code-based shapes or inline SVG for the cloud images.
+	•	Reset Icon:
+	•	Design the reset icon using code-based methods.
+	•	The icon should clearly represent the reset functionality.
+	5.	Fonts and Styles:
+	•	Use the Nunito font for all text elements.
+	•	Follow a color scheme that includes #87CEEB for the background.
+	•	Ensure all text and interactive elements have sufficient contrast for readability.
+	6.	Functionality:
+	•	Implement drag-and-drop functionality for both desktop and touch devices.
+	•	Include haptic feedback (vibration) on mobile devices when interacting with draggable elements and buttons.
+	•	Display and update the live time every second in the header.
+	7.	Accessibility:
+	•	Ensure all buttons and interactive elements have appropriate aria-labels for accessibility.
+	•	Implement focus states for interactive elements to support keyboard navigation.
+	•	Provide alt text for any images or visual elements created using code.
+	8.	Progressive Web App (PWA) Support:
+	•	Include a manifest.json file with appropriate metadata and icons for PWA functionality.
+	•	Since external image files are to be avoided, create the necessary app icons using code or provide guidance on how the icons should be generated.
+	•	Implement a service-worker.js to cache assets for offline use.
+	9.	Code Structure:
+	•	Use separate files for HTML (index.html), CSS (style.css), and JavaScript (script.js).
+	•	Ensure all IDs, classes, and elements are consistently named across HTML, CSS, and JavaScript to avoid errors.
+	•	Include the full emoji data in the script.js file as per the provided categories.
+	•	Organize code with comments and follow best practices for readability and maintenance.
+	10.	Testing and Optimization:
+	•	Test the app thoroughly to ensure all functionalities work as expected on various devices and browsers.
+	•	Optimize for performance and responsiveness.
+	•	Ensure that the app loads efficiently and animations run smoothly.
+
+Deliverables:
+	•	index.html: The main HTML file containing the structure of the app.
+	•	style.css: The CSS file containing all styles, including responsive design and animations.
+	•	script.js: The JavaScript file containing all the interactive functionalities and emoji data.
+	•	manifest.json: The manifest file for PWA support.
+	•	service-worker.js: The service worker file for caching assets.
+
+Additional Notes:
+	•	Visual Elements Without External Images:
+	•	All visual elements (logo, icons, backgrounds) should be created using code-based methods (CSS, HTML, inline SVG).
+	•	Avoid using external image files (.svg, .png, etc.) for these elements.
+	•	Use CSS techniques such as gradients, shapes, borders, and transformations to create the desired visuals.
+	•	Inline SVG code can be used directly within the HTML or CSS files to create complex shapes.
+	•	Image Paths for PWA Icons:
+	•	For PWA functionality, you may need to include app icons.
+	•	If external image files are not to be used, consider generating base64-encoded images or using code to generate the icons.
+	•	Alternatively, provide instructions or code to generate these icons when the app is installed.
+	•	Precise Measurements:
+	•	Maintain precise measurements for spacing and sizing as specified, such as the 2px gap between placeholders and buttons.
+	•	Haptic Feedback:
+	•	Implement haptic feedback using the navigator.vibrate API where appropriate.
+	•	Accessibility:
+	•	Use semantic HTML elements.
+	•	Provide descriptive labels and alt text for code-based visual elements.
+	•	Ensure keyboard navigation is possible for all interactive elements.
+	•	Comments and Documentation:
+	•	Include comments in the code to explain complex logic.
+	•	Document any external libraries or resources used.
+	•	Testing on Devices:
+	•	Test the app on multiple devices, including desktops, tablets, and smartphones.
+	•	Ensure touch interactions work smoothly on touch-enabled devices.
+
+By refining the prompt in this way, the Replit agent LLM should understand that all visual elements are to be created using code-based methods, without relying on external .svg files. This approach ensures that the app is self-contained and doesn’t depend on external image assets, which can be beneficial for performance and ease of deployment.
+
+If you need any further adjustments or have additional requests, please let me know, and I’ll be happy to help!
