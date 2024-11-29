@@ -30,11 +30,11 @@ function DraggableEmoji({ emoji, triggerHaptic }: DraggableEmojiProps) {
     <button
       ref={drag}
       className={`
-        text-xl sm:text-2xl rounded p-2 sm:p-1.5
+        text-lg sm:text-xl lg:text-2xl rounded p-1.5 sm:p-2
         transition-all duration-200 touch-manipulation
-        min-w-[44px] min-h-[44px] sm:min-w-[40px] sm:min-h-[40px]
+        min-w-[40px] min-h-[40px]
         flex items-center justify-center
-        ${isDragging ? 'opacity-50 scale-125' : 'hover:bg-gray-100 hover:scale-110'}
+        ${isDragging ? 'opacity-50 scale-115' : 'hover:bg-gray-100 hover:scale-105'}
       `}
       onClick={() => triggerHaptic()}
       aria-label={`Select ${emoji}`}
@@ -53,10 +53,10 @@ export function EmojiPicker() {
 
   // Get grid columns based on screen size
   const getGridColumns = () => {
-    if (typeof window === 'undefined') return 4;
+    if (typeof window === 'undefined') return 5;
     if (window.innerWidth >= 768) return 8;
     if (window.innerWidth >= 640) return 6;
-    return 4;
+    return 5;
   };
   
   const [gridColumns, setGridColumns] = useState(getGridColumns());
@@ -110,7 +110,7 @@ export function EmojiPicker() {
         attempts++;
       }
       
-      console.log(`Category change: ${emojiCategories[curr].name} -> ${emojiCategories[validNext].name}`);
+      console.log(`Category change: ${emojiCategories[curr].name} -> ${emojiCategories[validNext].name} (${validNext}/${emojiCategories.length - 1})`);
       return validNext;
     };
 
@@ -162,7 +162,7 @@ export function EmojiPicker() {
           <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
         </Button>
         <span className="font-medium text-sm sm:text-base">
-          {`${emojiCategories[category].name}${totalParts > 1 ? ` (Part ${part + 1}/${totalParts})` : ''}`}
+          {`${emojiCategories[category].name}${totalParts > 1 ? ` ${part + 1}/${totalParts}` : ''}`}
         </span>
         <Button
           variant="ghost"
@@ -177,7 +177,7 @@ export function EmojiPicker() {
 
       <div 
         ref={containerRef}
-        className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-1 sm:gap-2 min-h-[200px]"
+        className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 gap-0.5 sm:gap-1 md:gap-2 min-h-[200px]"
       >
         {currentEmojis.length > 0 ? (
           currentEmojis.map((emoji, index) => (
