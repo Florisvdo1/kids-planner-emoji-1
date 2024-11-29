@@ -51,12 +51,37 @@ export function EmojiPicker() {
   const triggerHaptic = useHapticFeedback();
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Validate current category and provide fallback
+  useEffect(() => {
+    if (category < 0 || category >= emojiCategories.length) {
+      console.warn(`Invalid category index: ${category}, resetting to 0`);
+      setCategory(0);
+    }
+  }, [category]);
+
   const handleCategoryChange = (direction: 'next' | 'prev') => {
     triggerHaptic();
-    const nextCategory = (curr: number) => (curr + 1) % emojiCategories.length;
-    const prevCategory = (curr: number) => (curr - 1 + emojiCategories.length) % emojiCategories.length;
     
-    setCategory(curr => direction === 'next' ? nextCategory(curr) : prevCategory(curr));
+    const nextCategory = (curr: number) => {
+      const next = direction === 'next' 
+        ? (curr + 1) % emojiCategories.length
+        : (curr - 1 + emojiCategories.length) % emojiCategories.length;
+      
+      // Validate the next category has emojis
+      let attempts = 0;
+      let validNext = next;
+      while (attempts < emojiCategories.length && emojiCategories[validNext].emojis.length === 0) {
+        validNext = direction === 'next'
+          ? (validNext + 1) % emojiCategories.length
+          : (validNext - 1 + emojiCategories.length) % emojiCategories.length;
+        attempts++;
+      }
+      
+      console.log(`Category change: ${emojiCategories[curr].name} -> ${emojiCategories[validNext].name}`);
+      return validNext;
+    };
+
+    setCategory(curr => nextCategory(curr));
     setSearchTerm(''); // Clear search when changing categories
   };
 
@@ -127,14 +152,24 @@ export function EmojiPicker() {
 
       <div 
         ref={containerRef}
-        className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-1 sm:gap-2"
+        className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-1 sm:gap-2 min-h-[200px]"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {currentEmojis.map((emoji, index) => (
-          <DraggableEmoji key={index} emoji={emoji.char} triggerHaptic={triggerHaptic} />
-        ))}
+        {currentEmojis.length > 0 ? (
+          currentEmojis.map((emoji, index) => (
+            <DraggableEmoji 
+              key={`${emoji.char}-${index}`} 
+              emoji={emoji.char} 
+              triggerHaptic={triggerHaptic} 
+            />
+          ))
+        ) : (
+          <div className="col-span-full flex items-center justify-center h-full text-gray-500">
+            {searchTerm ? 'No emojis found' : 'This category is empty'}
+          </div>
+        )}
       </div>
     </Card>
   );
