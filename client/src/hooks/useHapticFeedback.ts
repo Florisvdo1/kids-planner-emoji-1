@@ -5,11 +5,9 @@ export function useHapticFeedback() {
         // Pattern: vibrate 100ms, pause 50ms, vibrate 100ms
         navigator.vibrate([100, 50, 100]);
       } catch (error) {
-        // Enhanced error handling with specific error types
+        // Enhanced error handling with proper type checking
         if (error instanceof TypeError) {
           console.warn('Vibration API type error:', error.message);
-        } else if (error instanceof SecurityError) {
-          console.warn('Vibration API security error:', error.message);
         } else {
           console.warn('Unexpected Vibration API error:', error instanceof Error ? error.message : 'Unknown error');
         }

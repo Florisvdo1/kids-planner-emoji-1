@@ -10,8 +10,22 @@ import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
 import Home from "./pages/Home";
 
-// Detect touch device
-const isTouchDevice = 'ontouchstart' in window;
+// Enhanced touch detection
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+// Touch backend options for better handling
+const touchBackendOptions = {
+  enableMouseEvents: true,
+  enableTouchEvents: true,
+  enableKeyboardEvents: true,
+  delayTouchStart: 50,
+  enableHoverOutsideTarget: true,
+  ignoreContextMenu: true,
+  scrollAngleRanges: [
+    { start: 30, end: 150 },
+    { start: 210, end: 330 }
+  ]
+};
 
 function Router() {
   return (
@@ -25,7 +39,7 @@ function Router() {
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <DndProvider backend={isTouchDevice ? TouchBackend : HTML5Backend}>
+      <DndProvider backend={isTouchDevice ? TouchBackend : HTML5Backend} options={isTouchDevice ? touchBackendOptions : undefined}>
         <Router />
         <Toaster />
       </DndProvider>
