@@ -29,11 +29,18 @@ export const HomeworkButton = forwardRef<{ reset: () => void }, {}>(({}, ref) =>
         {isChecked && (
           <div className="animate-wubble">
             <div className="w-8 h-8 relative pixel-art">
-              {/* Pixel art thumb */}
-              <div className="absolute bg-white w-4 h-2" style={{ top: '0px', left: '2px' }} />
-              <div className="absolute bg-white w-2 h-4" style={{ top: '2px', left: '6px' }} />
-              <div className="absolute bg-white w-2 h-6" style={{ top: '2px', left: '2px' }} />
-              <div className="absolute bg-white w-4 h-2" style={{ top: '6px', left: '0px' }} />
+              {/* Pixel art thumb - 8x8 grid */}
+              <div className="absolute bg-white w-1 h-1" style={{ top: '1px', left: '3px' }} />
+              <div className="absolute bg-white w-2 h-1" style={{ top: '1px', left: '4px' }} />
+              <div className="absolute bg-white w-1 h-3" style={{ top: '2px', left: '6px' }} />
+              <div className="absolute bg-white w-1 h-4" style={{ top: '2px', left: '3px' }} />
+              <div className="absolute bg-white w-3 h-1" style={{ top: '5px', left: '2px' }} />
+              <div className="absolute bg-white w-1 h-2" style={{ top: '4px', left: '2px' }} />
+              {/* Add outline */}
+              <div className="absolute bg-black/20 w-1 h-6" style={{ top: '1px', left: '2px' }} />
+              <div className="absolute bg-black/20 w-5 h-1" style={{ top: '0px', left: '3px' }} />
+              <div className="absolute bg-black/20 w-1 h-4" style={{ top: '2px', left: '7px' }} />
+              <div className="absolute bg-black/20 w-3 h-1" style={{ top: '6px', left: '1px' }} />
             </div>
           </div>
         )}

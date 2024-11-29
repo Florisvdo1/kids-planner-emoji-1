@@ -78,8 +78,8 @@ export default function Home() {
         <div className="space-y-4">
           <PlaceholderGrid ref={morningGridRef} title="Morning" />
           <PlaceholderGrid ref={middayGridRef} title="Midday" />
-          <HomeworkButton ref={homeworkButtonRef} />
           <PlaceholderGrid ref={eveningGridRef} title="Evening" />
+          <HomeworkButton ref={homeworkButtonRef} />
         </div>
         
         <div className="mt-8 space-y-6">

@@ -86,7 +86,7 @@ export function EmojiPicker() {
   );
 
   return (
-    <Card className="p-3 sm:p-4">
+    <Card className="p-3 sm:p-4 relative z-20">
       <div className="flex gap-2 mb-3 sm:mb-4">
         <div className="relative flex-1">
           <Input

@@ -49,8 +49,9 @@ function Placeholder({ emoji, onDrop, index, onEmojiSwap }: PlaceholderProps) {
         border-2 rounded-lg flex items-center justify-center
         text-base sm:text-lg md:text-xl
         transition-all duration-200
+        relative z-10
         ${isOver ? 'border-primary shadow-lg scale-110' : 'border-gray-300'}
-        ${isDragging ? 'opacity-50 scale-125' : ''}
+        ${isDragging ? 'opacity-50 scale-125 z-50' : ''}
         ${canDrop ? 'bg-primary/10' : emoji ? 'bg-white' : 'bg-gray-50'}
         hover:bg-gray-50/80
         touch-manipulation
