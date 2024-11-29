@@ -65,7 +65,7 @@ export default function Home() {
       {showTutorial && <TutorialOverlay onClose={handleCloseTutorial} />}
       <CloudBackground />
       
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 relative z-10">
+      <main className="container mx-auto px-2 sm:px-4 lg:px-6 py-3 sm:py-4 relative z-10">
         <header className="flex justify-between items-center mb-8">
           <h1 className="text-xl sm:text-2xl font-bold text-white">
             Emoji Dagplanner

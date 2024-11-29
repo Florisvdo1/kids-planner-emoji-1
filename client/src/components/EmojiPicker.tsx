@@ -34,7 +34,8 @@ function DraggableEmoji({ emoji, triggerHaptic }: DraggableEmojiProps) {
         transition-all duration-200 touch-manipulation
         min-w-[40px] min-h-[40px]
         flex items-center justify-center
-        ${isDragging ? 'opacity-50 scale-115' : 'hover:bg-gray-100 hover:scale-105'}
+        ${isDragging ? 'opacity-50 scale-125 shadow-lg' : 'hover:bg-gray-100 hover:scale-115'}
+        transition-transform duration-200 ease-out transform-gpu
       `}
       onClick={() => triggerHaptic()}
       aria-label={`Select ${emoji}`}
@@ -137,7 +138,7 @@ export function EmojiPicker() {
   const totalParts = emojiRows.length;
 
   return (
-    <Card className="p-3 sm:p-4 relative z-20">
+    <Card className="p-2 sm:p-3 relative z-20">
       <div className="flex gap-2 mb-3 sm:mb-4">
         <div className="relative flex-1">
           <Input

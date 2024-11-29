@@ -48,12 +48,12 @@ function Placeholder({ emoji, onDrop, index, onEmojiSwap }: PlaceholderProps) {
         w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14
         border-2 rounded-lg flex items-center justify-center
         text-base sm:text-lg md:text-xl
-        transition-all duration-200
+        transition-all duration-300 ease-out
         relative z-10
-        ${isOver ? 'border-primary shadow-lg scale-110' : 'border-gray-300'}
-        ${isDragging ? 'opacity-50 scale-125 z-50' : ''}
-        ${canDrop ? 'bg-primary/10' : emoji ? 'bg-white' : 'bg-gray-50'}
-        hover:bg-gray-50/80
+        ${isOver ? 'border-primary shadow-xl scale-110 glow-effect' : 'border-gray-300 hover:shadow-lg'}
+        ${isDragging ? 'opacity-50 scale-125 z-50 shadow-xl' : ''}
+        ${canDrop ? 'bg-primary/10' : emoji ? 'bg-white hover:bg-gray-50/90' : 'bg-gray-50'}
+        hover:scale-115
         touch-manipulation
         transform-gpu
       `}
@@ -103,7 +103,7 @@ export const PlaceholderGrid = forwardRef<{ reset: () => void }, PlaceholderGrid
   };
 
   return (
-    <Card className="p-3 sm:p-4">
+    <Card className="p-2 sm:p-3 transform-gpu hover:glow-effect">
       <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">{title}</h3>
       <div className="flex flex-wrap gap-1.5 sm:gap-2">
         {placeholders.map((emoji, index) => (
