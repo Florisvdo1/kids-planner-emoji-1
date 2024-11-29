@@ -53,12 +53,11 @@ export function EmojiPicker() {
 
   const handleCategoryChange = (direction: 'next' | 'prev') => {
     triggerHaptic();
-    setCategory(curr => {
-      if (direction === 'next') {
-        return (curr + 1) % emojiCategories.length;
-      }
-      return curr === 0 ? emojiCategories.length - 1 : curr - 1;
-    });
+    const nextCategory = (curr: number) => (curr + 1) % emojiCategories.length;
+    const prevCategory = (curr: number) => (curr - 1 + emojiCategories.length) % emojiCategories.length;
+    
+    setCategory(curr => direction === 'next' ? nextCategory(curr) : prevCategory(curr));
+    setSearchTerm(''); // Clear search when changing categories
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -70,10 +69,12 @@ export function EmojiPicker() {
 
     const touchEnd = e.touches[0].clientX;
     const diff = touchStart - touchEnd;
+    const threshold = 50; // Minimum swipe distance
 
-    if (Math.abs(diff) > 50) {
+    if (Math.abs(diff) > threshold) {
       handleCategoryChange(diff > 0 ? 'next' : 'prev');
       setTouchStart(null);
+      e.preventDefault(); // Prevent scrolling while swiping
     }
   };
 
