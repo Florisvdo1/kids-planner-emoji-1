@@ -51,7 +51,11 @@ export default function Home() {
           </time>
         </header>
 
-        <PlaceholderGrid />
+        <div className="space-y-4">
+          <PlaceholderGrid title="Morning" />
+          <PlaceholderGrid title="Midday" />
+          <PlaceholderGrid title="Evening" />
+        </div>
         
         <div className="mt-8 space-y-6">
           <HuiswerkButton />

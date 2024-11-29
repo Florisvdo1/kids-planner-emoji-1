@@ -33,7 +33,11 @@ function Placeholder({ emoji, onDrop }: PlaceholderProps) {
   );
 }
 
-export function PlaceholderGrid() {
+interface PlaceholderGridProps {
+  title: string;
+}
+
+export function PlaceholderGrid({ title }: PlaceholderGridProps) {
   const [placeholders, setPlaceholders] = useState<(string | null)[]>([null]);
   const triggerHaptic = useHapticFeedback();
 
@@ -53,6 +57,7 @@ export function PlaceholderGrid() {
 
   return (
     <Card className="p-4">
+      <h3 className="text-lg font-semibold mb-4">{title}</h3>
       <div className="flex flex-wrap gap-2">
         {placeholders.map((emoji, index) => (
           <Placeholder
