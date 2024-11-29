@@ -5,7 +5,35 @@ import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import { emojiCategories } from '../lib/emojiData';
 import { useHapticFeedback } from '../hooks/useHapticFeedback';
+import { useDrag } from 'react-dnd';
 
+interface DraggableEmojiProps {
+  emoji: string;
+  triggerHaptic: () => void;
+}
+
+function DraggableEmoji({ emoji, triggerHaptic }: DraggableEmojiProps) {
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: 'emoji',
+    item: { emoji },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  }));
+
+  return (
+    <button
+      ref={drag}
+      className={`
+        text-2xl rounded p-1 transition-colors
+        ${isDragging ? 'opacity-50' : 'hover:bg-gray-100'}
+      `}
+      onClick={() => triggerHaptic()}
+    >
+      {emoji}
+    </button>
+  );
+}
 export function EmojiPicker() {
   const [category, setCategory] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
@@ -62,13 +90,7 @@ export function EmojiPicker() {
 
       <div className="grid grid-cols-8 gap-2">
         {currentEmojis.map((emoji, index) => (
-          <button
-            key={index}
-            className="text-2xl hover:bg-gray-100 rounded p-1 transition-colors"
-            onClick={() => triggerHaptic()}
-          >
-            {emoji.char}
-          </button>
+          <DraggableEmoji key={index} emoji={emoji.char} triggerHaptic={triggerHaptic} />
         ))}
       </div>
     </Card>
