@@ -47,7 +47,6 @@ function DraggableEmoji({ emoji, triggerHaptic }: DraggableEmojiProps) {
 export function EmojiPicker() {
   const [category, setCategory] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
-  const [touchStart, setTouchStart] = useState<number | null>(null);
   const triggerHaptic = useHapticFeedback();
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -83,28 +82,6 @@ export function EmojiPicker() {
 
     setCategory(curr => nextCategory(curr));
     setSearchTerm(''); // Clear search when changing categories
-  };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStart(e.touches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!touchStart) return;
-
-    const touchEnd = e.touches[0].clientX;
-    const diff = touchStart - touchEnd;
-    const threshold = 50; // Minimum swipe distance
-
-    if (Math.abs(diff) > threshold) {
-      handleCategoryChange(diff > 0 ? 'next' : 'prev');
-      setTouchStart(null);
-      e.preventDefault(); // Prevent scrolling while swiping
-    }
-  };
-
-  const handleTouchEnd = () => {
-    setTouchStart(null);
   };
 
   const currentEmojis = emojiCategories[category].emojis.filter(emoji => 
@@ -153,9 +130,6 @@ export function EmojiPicker() {
       <div 
         ref={containerRef}
         className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-1 sm:gap-2 min-h-[200px]"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
       >
         {currentEmojis.length > 0 ? (
           currentEmojis.map((emoji, index) => (

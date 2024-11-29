@@ -9,20 +9,11 @@ export const emojiCategories = [
       { char: "🥰", name: "smiling face with hearts" },
       { char: "😎", name: "smiling face with sunglasses" },
       { char: "😴", name: "sleeping face" },
-      { char: "🤔", name: "thinking face" }
-    ]
-  },
-  {
-    name: "Animals",
-    emojis: [
-      { char: "🐶", name: "dog" },
-      { char: "🐱", name: "cat" },
-      { char: "🐭", name: "mouse" },
-      { char: "🦁", name: "lion" },
-      { char: "🐸", name: "frog" },
-      { char: "🦊", name: "fox" },
-      { char: "🐼", name: "panda" },
-      { char: "🦄", name: "unicorn" }
+      { char: "🤔", name: "thinking face" },
+      { char: "😂", name: "face with tears of joy" },
+      { char: "🥳", name: "partying face" },
+      { char: "😋", name: "face savoring food" },
+      { char: "😇", name: "smiling face with halo" }
     ]
   },
   {
@@ -35,7 +26,11 @@ export const emojiCategories = [
       { char: "🎵", name: "musical note" },
       { char: "🏃", name: "person running" },
       { char: "🚴", name: "person biking" },
-      { char: "✏️", name: "pencil" }
+      { char: "✏️", name: "pencil" },
+      { char: "🎭", name: "performing arts" },
+      { char: "🎪", name: "circus tent" },
+      { char: "⚾", name: "baseball" },
+      { char: "🏸", name: "badminton" }
     ]
   },
   {
@@ -48,7 +43,11 @@ export const emojiCategories = [
       { char: "🥪", name: "sandwich" },
       { char: "🍜", name: "noodles" },
       { char: "🥤", name: "drink" },
-      { char: "🍫", name: "chocolate bar" }
+      { char: "🍫", name: "chocolate bar" },
+      { char: "🥨", name: "pretzel" },
+      { char: "🥐", name: "croissant" },
+      { char: "🧀", name: "cheese" },
+      { char: "🥗", name: "green salad" }
     ]
   },
   {
@@ -61,6 +60,27 @@ export const emojiCategories = [
       { char: "⛪", name: "church" },
       { char: "🏟️", name: "stadium" },
       { char: "🏊", name: "swimming pool" },
+      { char: "🎪", name: "circus tent" },
+      { char: "🏕️", name: "camping" },
+      { char: "🌇", name: "sunset" },
+      { char: "⛲", name: "fountain" },
+      { char: "🎡", name: "ferris wheel" }
+    ]
+  },
+  {
+    name: "Objects",
+    emojis: [
+      { char: "📱", name: "mobile phone" },
+      { char: "💻", name: "laptop" },
+      { char: "⌚", name: "watch" },
+      { char: "🎒", name: "backpack" },
+      { char: "📖", name: "open book" },
+      { char: "🎮", name: "video game controller" },
+      { char: "🎨", name: "art supplies" },
+      { char: "📷", name: "camera" },
+      { char: "🔑", name: "key" },
+      { char: "💡", name: "light bulb" },
+      { char: "🎵", name: "musical note" },
       { char: "🎪", name: "circus tent" }
     ]
   }
