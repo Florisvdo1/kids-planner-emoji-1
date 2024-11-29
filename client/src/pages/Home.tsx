@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { CloudBackground } from '../components/CloudBackground';
 import { PlaceholderGrid } from '../components/PlaceholderGrid';
 import { EmojiPicker } from '../components/EmojiPicker';
-
+import { DayRating } from '../components/DayRating';
 import { HuiswerkButton } from '../components/HuiswerkButton';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
@@ -26,7 +26,7 @@ export default function Home() {
 
   const handleReset = () => {
     triggerHaptic();
-    // Reset logic here
+    window.location.reload(); // This will reset all components to their initial state
   };
 
   if (loading) {
@@ -59,6 +59,7 @@ export default function Home() {
         
         <div className="mt-8 space-y-6">
           <HuiswerkButton />
+          <DayRating />
           <EmojiPicker />
           
           <Button 
