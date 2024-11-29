@@ -1,32 +1,55 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { CloudBackground } from '../components/CloudBackground';
 import { PlaceholderGrid } from '../components/PlaceholderGrid';
 import { EmojiPicker } from '../components/EmojiPicker';
-import { DayRating } from '../components/DayRating';
-import { HuiswerkButton } from '../components/HuiswerkButton';
+import { HomeworkButton } from '../components/HomeworkButton';
+import { TutorialOverlay } from '../components/TutorialOverlay';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import { useHapticFeedback } from '../hooks/useHapticFeedback';
 
+type GridRef = { reset: () => void };
+
 export default function Home() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [loading, setLoading] = useState(true);
+  const [showTutorial, setShowTutorial] = useState(false);
   const triggerHaptic = useHapticFeedback();
+
+  const morningGridRef = useRef<GridRef>(null);
+  const middayGridRef = useRef<GridRef>(null);
+  const eveningGridRef = useRef<GridRef>(null);
+  const homeworkButtonRef = useRef<GridRef>(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
     
+    // Check if it's the first visit
+    const hasVisited = localStorage.getItem('hasVisitedBefore');
+    if (!hasVisited) {
+      setShowTutorial(true);
+      localStorage.setItem('hasVisitedBefore', 'true');
+    }
+
     // Simulate loading
     setTimeout(() => setLoading(false), 1000);
 
     return () => clearInterval(timer);
   }, []);
 
+  const handleCloseTutorial = () => {
+    setShowTutorial(false);
+  };
+
   const handleReset = () => {
     triggerHaptic();
-    window.location.reload(); // This will reset all components to their initial state
+    // Reset all grid components
+    morningGridRef.current?.reset();
+    middayGridRef.current?.reset();
+    eveningGridRef.current?.reset();
+    homeworkButtonRef.current?.reset();
   };
 
   if (loading) {
@@ -39,6 +62,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#87CEEB] font-nunito relative overflow-hidden">
+      {showTutorial && <TutorialOverlay onClose={handleCloseTutorial} />}
       <CloudBackground />
       
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 relative z-10">
@@ -52,14 +76,13 @@ export default function Home() {
         </header>
 
         <div className="space-y-4">
-          <PlaceholderGrid title="Morning" />
-          <PlaceholderGrid title="Midday" />
-          <PlaceholderGrid title="Evening" />
+          <PlaceholderGrid ref={morningGridRef} title="Morning" />
+          <PlaceholderGrid ref={middayGridRef} title="Midday" />
+          <HomeworkButton ref={homeworkButtonRef} />
+          <PlaceholderGrid ref={eveningGridRef} title="Evening" />
         </div>
         
         <div className="mt-8 space-y-6">
-          <HuiswerkButton />
-          <DayRating />
           <EmojiPicker />
           
           <Button 

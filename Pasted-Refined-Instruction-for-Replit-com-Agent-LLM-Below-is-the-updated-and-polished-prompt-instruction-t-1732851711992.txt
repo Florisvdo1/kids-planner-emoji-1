@@ -1,0 +1,73 @@
+Refined Instruction for Replit.com Agent LLM
+
+Below is the updated and polished prompt instruction to ensure the Replit.com Agent LLM fully understands the refinements and new features for the Emoji Day Planner.
+
+Refinements and New Features
+
+1. Refine the Homework Toggle Button
+
+	•	Change Button Name:
+	•	Replace the button text “Huiswerk” with “Homework”.
+	•	Pixel Art Style:
+	•	Design a homework icon in pixel art style:
+	•	Default State: A container with a red background and the text “Homework.”
+	•	Toggled State: The container becomes green with a thumbs-up pixel art icon next to the text.
+	•	Animation:
+	•	When toggled green, add a thumbs-up icon with a seamless wubbling effect animation that loops once.
+	•	When toggled back to red, remove the thumbs-up icon and reset the button.
+	•	Interactive Behavior:
+	•	When the user toggles the button:
+	•	Red: Indicates homework not completed.
+	•	Green: Indicates homework completed.
+	•	Reposition Homework Container:
+	•	Move the homework button above the Evening container to save space for a better viewport on all devices.
+
+2. Refine the Reset Button
+
+	•	Functionality:
+	•	Ensure the reset button erases all placed emojis in all placeholders.
+	•	Clear all placeholders without disrupting other UI components.
+
+3. Add a New Tutorial Integration
+
+	•	First-Time Page Load:
+	•	When the Emoji Planner is loaded for the first time, display a detailed overlay tutorial explaining how to use the app.
+	•	Tutorial Design:
+	•	Use high-detail framing and animation for a live tutorial experience.
+	•	The tutorial should include:
+	•	An explanation of the emoji deck and how to drag and drop emojis into placeholders.
+	•	A guide on how to toggle the Homework button.
+	•	An overview of the Reset button functionality.
+	•	Interactive Steps:
+	•	Create a step-by-step tutorial:
+	•	Each step explains one feature (e.g., emoji deck, Homework button).
+	•	Include a “Next” button to navigate to the next step.
+	•	At the end of the tutorial, display a “Start” button to begin using the app.
+	•	Skip Option:
+	•	Add a “Skip” button at the top of the overlay to allow users to skip the tutorial entirely.
+
+Behavior and Testing Requirements
+
+	1.	Homework Button:
+	•	Test the button’s toggle functionality to ensure:
+	•	The state switches correctly between red and green.
+	•	The thumbs-up icon animates only in the green state.
+	•	Validate button behavior on all devices (mobile, tablet, and desktop).
+	2.	Reset Button:
+	•	Ensure all placeholders are cleared when the reset button is clicked.
+	•	Verify no residual data remains in placeholders after resetting.
+	3.	Tutorial Overlay:
+	•	Confirm the overlay displays only on the first load.
+	•	Test the navigation through tutorial steps using the Next button.
+	•	Ensure the Skip button functions correctly and bypasses the tutorial.
+	4.	Viewport Optimization:
+	•	Ensure the repositioned homework button and adjusted UI provide a clear and responsive layout across all screen sizes.
+
+Output Expectations
+
+The Replit.com Agent LLM should:
+	1.	Provide complete and integrated outputs for script.js, style.css, and index.html with all refinements and new features.
+	2.	Ensure the homework button toggle, reset button, and tutorial overlay are fully functional.
+	3.	Optimize the UI for mobile-first responsiveness.
+
+Let me know if additional refinements are needed! 😊

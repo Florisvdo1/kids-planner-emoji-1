@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, forwardRef, useImperativeHandle } from 'react';
 import { useDrop } from 'react-dnd';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -43,9 +43,13 @@ interface PlaceholderGridProps {
   title: string;
 }
 
-export function PlaceholderGrid({ title }: PlaceholderGridProps) {
+export const PlaceholderGrid = forwardRef<{ reset: () => void }, PlaceholderGridProps>(({ title }, ref) => {
   const [placeholders, setPlaceholders] = useState<(string | null)[]>([null]);
   const triggerHaptic = useHapticFeedback();
+
+  useImperativeHandle(ref, () => ({
+    reset: () => setPlaceholders([null])
+  }));
 
   const handleAddPlaceholder = () => {
     if (placeholders.length < 5) {
@@ -87,4 +91,6 @@ export function PlaceholderGrid({ title }: PlaceholderGridProps) {
       </div>
     </Card>
   );
-}
+});
+
+PlaceholderGrid.displayName = 'PlaceholderGrid';
