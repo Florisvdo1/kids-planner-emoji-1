@@ -46,9 +46,29 @@ function DraggableEmoji({ emoji, triggerHaptic }: DraggableEmojiProps) {
 
 export function EmojiPicker() {
   const [category, setCategory] = useState(0);
+  const [part, setPart] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const triggerHaptic = useHapticFeedback();
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Get grid columns based on screen size
+  const getGridColumns = () => {
+    if (typeof window === 'undefined') return 4;
+    if (window.innerWidth >= 768) return 8;
+    if (window.innerWidth >= 640) return 6;
+    return 4;
+  };
+  
+  const [gridColumns, setGridColumns] = useState(getGridColumns());
+
+  useEffect(() => {
+    const handleResize = () => {
+      setGridColumns(getGridColumns());
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Validate current category and provide fallback
   useEffect(() => {
@@ -57,6 +77,20 @@ export function EmojiPicker() {
       setCategory(0);
     }
   }, [category]);
+
+  const getFilteredEmojis = () => {
+    return emojiCategories[category].emojis.filter(emoji => 
+      emoji.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  };
+
+  const splitIntoRows = (emojis: typeof emojiCategories[0]['emojis']) => {
+    const rows: typeof emojis[] = [];
+    for (let i = 0; i < emojis.length; i += gridColumns) {
+      rows.push(emojis.slice(i, i + gridColumns));
+    }
+    return rows;
+  };
 
   const handleCategoryChange = (direction: 'next' | 'prev') => {
     triggerHaptic();
@@ -81,12 +115,26 @@ export function EmojiPicker() {
     };
 
     setCategory(curr => nextCategory(curr));
+    setPart(0); // Reset part when changing categories
     setSearchTerm(''); // Clear search when changing categories
   };
 
-  const currentEmojis = emojiCategories[category].emojis.filter(emoji => 
-    emoji.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const handlePartChange = (direction: 'next' | 'prev') => {
+    triggerHaptic();
+    const rows = splitIntoRows(getFilteredEmojis());
+    
+    setPart(curr => {
+      if (direction === 'next') {
+        return (curr + 1) % rows.length;
+      }
+      return (curr - 1 + rows.length) % rows.length;
+    });
+  };
+
+  const filteredEmojis = getFilteredEmojis();
+  const emojiRows = splitIntoRows(filteredEmojis);
+  const currentEmojis = emojiRows[Math.min(part, emojiRows.length - 1)] || [];
+  const totalParts = emojiRows.length;
 
   return (
     <Card className="p-3 sm:p-4 relative z-20">
@@ -107,19 +155,19 @@ export function EmojiPicker() {
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => handleCategoryChange('prev')}
+          onClick={() => totalParts > 1 ? handlePartChange('prev') : handleCategoryChange('prev')}
           className="h-10 w-10 sm:h-11 sm:w-11"
           aria-label="Previous category"
         >
           <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
         </Button>
         <span className="font-medium text-sm sm:text-base">
-          {emojiCategories[category].name}
+          {`${emojiCategories[category].name}${totalParts > 1 ? ` (Part ${part + 1}/${totalParts})` : ''}`}
         </span>
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => handleCategoryChange('next')}
+          onClick={() => totalParts > 1 ? handlePartChange('next') : handleCategoryChange('next')}
           className="h-10 w-10 sm:h-11 sm:w-11"
           aria-label="Next category"
         >
