@@ -13,11 +13,19 @@ export function CloudBackground() {
         
         .cloud {
           position: absolute;
-          width: 100px;
-          height: 40px;
+          width: 80px;
+          height: 32px;
           background: rgba(255, 255, 255, 0.8);
-          border-radius: 20px;
+          border-radius: 16px;
           animation: float linear infinite;
+        }
+        
+        @media (min-width: 640px) {
+          .cloud {
+            width: 100px;
+            height: 40px;
+            border-radius: 20px;
+          }
         }
         
         .cloud::before,
@@ -29,17 +37,33 @@ export function CloudBackground() {
         }
         
         .cloud::before {
-          width: 50px;
-          height: 50px;
-          top: -20px;
-          left: 15px;
+          width: 40px;
+          height: 40px;
+          top: -16px;
+          left: 12px;
         }
         
         .cloud::after {
-          width: 30px;
-          height: 30px;
-          top: -10px;
-          left: 45px;
+          width: 24px;
+          height: 24px;
+          top: -8px;
+          left: 36px;
+        }
+        
+        @media (min-width: 640px) {
+          .cloud::before {
+            width: 50px;
+            height: 50px;
+            top: -20px;
+            left: 15px;
+          }
+          
+          .cloud::after {
+            width: 30px;
+            height: 30px;
+            top: -10px;
+            left: 45px;
+          }
         }
         
         .cloud-1 {

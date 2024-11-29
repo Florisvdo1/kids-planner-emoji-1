@@ -23,10 +23,16 @@ function Placeholder({ emoji, onDrop }: PlaceholderProps) {
     <div
       ref={drop}
       className={`
-        w-12 h-12 border-2 rounded-lg flex items-center justify-center
+        w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14
+        border-2 rounded-lg flex items-center justify-center
+        text-base sm:text-lg md:text-xl
+        transition-colors duration-200
         ${isOver ? 'border-primary' : 'border-gray-300'}
         ${emoji ? 'bg-white' : 'bg-gray-50'}
+        hover:bg-gray-50/80
+        touch-manipulation
       `}
+      aria-label={emoji ? `Placeholder with ${emoji}` : 'Empty placeholder'}
     >
       {emoji || '?'}
     </div>
@@ -56,9 +62,9 @@ export function PlaceholderGrid({ title }: PlaceholderGridProps) {
   };
 
   return (
-    <Card className="p-4">
-      <h3 className="text-lg font-semibold mb-4">{title}</h3>
-      <div className="flex flex-wrap gap-2">
+    <Card className="p-3 sm:p-4">
+      <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">{title}</h3>
+      <div className="flex flex-wrap gap-1.5 sm:gap-2">
         {placeholders.map((emoji, index) => (
           <Placeholder
             key={index}
@@ -72,9 +78,10 @@ export function PlaceholderGrid({ title }: PlaceholderGridProps) {
             variant="outline"
             size="icon"
             onClick={handleAddPlaceholder}
-            className="w-12 h-12"
+            className="w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14 touch-manipulation"
+            aria-label="Add placeholder"
           >
-            <Plus className="h-4 w-4" />
+            <Plus className="h-4 w-4 sm:h-5 sm:w-5" />
           </Button>
         )}
       </div>

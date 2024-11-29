@@ -41,9 +41,9 @@ export default function Home() {
     <div className="min-h-screen bg-[#87CEEB] font-nunito relative overflow-hidden">
       <CloudBackground />
       
-      <main className="container mx-auto px-4 py-6 relative z-10">
+      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 relative z-10">
         <header className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-bold text-white">
+          <h1 className="text-xl sm:text-2xl font-bold text-white">
             Emoji Dagplanner
           </h1>
           <time className="text-white">
