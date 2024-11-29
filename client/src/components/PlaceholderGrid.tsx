@@ -1,5 +1,6 @@
 import { useState, forwardRef, useImperativeHandle } from 'react';
-import { useDrop } from 'react-dnd';
+import { useDrop, useDrag } from 'react-dnd';
+import type { DragSourceMonitor, DropTargetMonitor } from 'react-dnd';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';

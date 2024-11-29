@@ -42,7 +42,7 @@ export const HomeworkButton = forwardRef<{ reset: () => void }, {}>(({}, ref) =>
         </span>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .pixel-art * {
           transform-origin: center;
           image-rendering: pixelated;
