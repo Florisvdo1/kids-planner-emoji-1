@@ -19,9 +19,12 @@ function DraggableEmoji({ emoji, triggerHaptic }: DraggableEmojiProps) {
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
+    begin: () => {
+      triggerHaptic(); // Haptic feedback when starting drag
+    },
     end: (item, monitor) => {
       if (monitor.didDrop()) {
-        triggerHaptic();
+        triggerHaptic(); // Haptic feedback when dropping emoji
       }
     },
   }));
@@ -34,8 +37,8 @@ function DraggableEmoji({ emoji, triggerHaptic }: DraggableEmojiProps) {
         transition-all duration-200 touch-manipulation
         min-w-[40px] min-h-[40px]
         flex items-center justify-center
-        ${isDragging ? 'opacity-50 scale-130 shadow-xl' : 'hover:bg-gray-100 hover:scale-115'}
-        transition-all duration-200 ease-out transform-gpu
+        ${isDragging ? 'opacity-50 scale-125 rotate-1 shadow-xl' : 'hover:bg-gray-100 hover:scale-110'}
+        transition-all duration-300 ease-out transform-gpu will-change-transform
       `}
       onClick={() => triggerHaptic()}
       aria-label={`Select ${emoji}`}

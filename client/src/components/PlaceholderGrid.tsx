@@ -35,11 +35,15 @@ function Placeholder({ emoji, onDrop, index, onEmojiSwap }: PlaceholderProps) {
         Math.pow(clientOffset.y - (hoverBoundingRect.top + hoverBoundingRect.height / 2), 2)
       );
       
-      // Add proximity effect when within 50px
-      if (distance < 50) {
-        (drop as any).current?.style.setProperty('--proximity-glow', `${(1 - distance / 50) * 20}px`);
+      // Add proximity effect when within 30px for more precise snapping
+      if (distance < 30) {
+        const intensity = (1 - distance / 30);
+        (drop as any).current?.style.setProperty('--proximity-glow', `${intensity * 25}px`);
+        (drop as any).current?.style.setProperty('--glow-opacity', `${intensity * 0.8}`);
+        triggerHaptic(); // Haptic feedback when entering drop zone
       } else {
         (drop as any).current?.style.setProperty('--proximity-glow', '0px');
+        (drop as any).current?.style.setProperty('--glow-opacity', '0');
       }
     },
     collect: (monitor) => ({
@@ -69,13 +73,13 @@ function Placeholder({ emoji, onDrop, index, onEmojiSwap }: PlaceholderProps) {
         text-base sm:text-lg md:text-xl
         transition-all duration-300 ease-out
         relative z-10
-        ${isOver ? 'border-primary shadow-2xl scale-130 glow-effect-strong' : 'border-gray-300 hover:shadow-lg'}
-        ${isDragging ? 'opacity-50 scale-130 z-50 shadow-2xl' : ''}
+        ${isOver ? 'border-primary shadow-2xl scale-125 glow-effect-strong' : 'border-gray-300 hover:shadow-lg'}
+        ${isDragging ? 'opacity-50 scale-125 rotate-2 z-50 shadow-2xl' : ''}
         ${canDrop ? 'bg-primary/10' : emoji ? 'bg-white hover:bg-gray-50/90' : 'bg-gray-50'}
-        hover:scale-115
+        hover:scale-110
         touch-manipulation
         transform-gpu
-        transition-transform duration-200 ease-out
+        transition-all duration-300 ease-out
       `}
       style={{
         boxShadow: isOver ? '0 0 10px rgba(135, 206, 235, 0.5)' : 'none',
