@@ -8,30 +8,56 @@ import { useHapticFeedback } from '../hooks/useHapticFeedback';
 interface PlaceholderProps {
   emoji: string | null;
   onDrop: (item: { emoji: string }) => void;
+  index: number;
+  onEmojiSwap: (fromIndex: number, toIndex: number) => void;
 }
 
-function Placeholder({ emoji, onDrop }: PlaceholderProps) {
-  const [{ isOver }, drop] = useDrop(() => ({
+function Placeholder({ emoji, onDrop, index, onEmojiSwap }: PlaceholderProps) {
+  const [{ isOver, canDrop }, drop] = useDrop(() => ({
     accept: 'emoji',
-    drop: (item: { emoji: string }) => onDrop(item),
+    drop: (item: { emoji: string; sourceIndex?: number }) => {
+      if (typeof item.sourceIndex === 'number') {
+        onEmojiSwap(item.sourceIndex, index);
+      } else {
+        onDrop(item);
+      }
+    },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    }),
+  }));
+
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: 'emoji',
+    item: { emoji, sourceIndex: index },
+    canDrag: !!emoji,
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
     }),
   }));
 
   return (
     <div
-      ref={drop}
+      ref={(node) => {
+        drop(node);
+        if (emoji) drag(node);
+      }}
       className={`
         w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14
         border-2 rounded-lg flex items-center justify-center
         text-base sm:text-lg md:text-xl
-        transition-colors duration-200
-        ${isOver ? 'border-primary' : 'border-gray-300'}
-        ${emoji ? 'bg-white' : 'bg-gray-50'}
+        transition-all duration-200
+        ${isOver ? 'border-primary shadow-lg scale-110' : 'border-gray-300'}
+        ${isDragging ? 'opacity-50 scale-125' : ''}
+        ${canDrop ? 'bg-primary/10' : emoji ? 'bg-white' : 'bg-gray-50'}
         hover:bg-gray-50/80
         touch-manipulation
+        transform-gpu
       `}
+      style={{
+        boxShadow: isOver ? '0 0 10px rgba(135, 206, 235, 0.5)' : 'none',
+      }}
       aria-label={emoji ? `Placeholder with ${emoji}` : 'Empty placeholder'}
     >
       {emoji || '?'}
@@ -65,6 +91,15 @@ export const PlaceholderGrid = forwardRef<{ reset: () => void }, PlaceholderGrid
     setPlaceholders(newPlaceholders);
   };
 
+  const handleEmojiSwap = (fromIndex: number, toIndex: number) => {
+    triggerHaptic();
+    const newPlaceholders = [...placeholders];
+    const temp = newPlaceholders[fromIndex];
+    newPlaceholders[fromIndex] = newPlaceholders[toIndex];
+    newPlaceholders[toIndex] = temp;
+    setPlaceholders(newPlaceholders);
+  };
+
   return (
     <Card className="p-3 sm:p-4">
       <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">{title}</h3>
@@ -73,7 +108,9 @@ export const PlaceholderGrid = forwardRef<{ reset: () => void }, PlaceholderGrid
           <Placeholder
             key={index}
             emoji={emoji}
+            index={index}
             onDrop={(item) => handleDrop(index, item)}
+            onEmojiSwap={handleEmojiSwap}
           />
         ))}
         

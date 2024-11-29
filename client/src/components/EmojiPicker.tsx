@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useDrag } from 'react-dnd';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -19,6 +19,11 @@ function DraggableEmoji({ emoji, triggerHaptic }: DraggableEmojiProps) {
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
+    end: (item, monitor) => {
+      if (monitor.didDrop()) {
+        triggerHaptic();
+      }
+    },
   }));
 
   return (
@@ -26,10 +31,10 @@ function DraggableEmoji({ emoji, triggerHaptic }: DraggableEmojiProps) {
       ref={drag}
       className={`
         text-xl sm:text-2xl rounded p-2 sm:p-1.5
-        transition-colors touch-manipulation
+        transition-all duration-200 touch-manipulation
         min-w-[44px] min-h-[44px] sm:min-w-[40px] sm:min-h-[40px]
         flex items-center justify-center
-        ${isDragging ? 'opacity-50' : 'hover:bg-gray-100'}
+        ${isDragging ? 'opacity-50 scale-125' : 'hover:bg-gray-100 hover:scale-110'}
       `}
       onClick={() => triggerHaptic()}
       aria-label={`Select ${emoji}`}
@@ -42,7 +47,9 @@ function DraggableEmoji({ emoji, triggerHaptic }: DraggableEmojiProps) {
 export function EmojiPicker() {
   const [category, setCategory] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
+  const [touchStart, setTouchStart] = useState<number | null>(null);
   const triggerHaptic = useHapticFeedback();
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const handleCategoryChange = (direction: 'next' | 'prev') => {
     triggerHaptic();
@@ -52,6 +59,26 @@ export function EmojiPicker() {
       }
       return curr === 0 ? emojiCategories.length - 1 : curr - 1;
     });
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!touchStart) return;
+
+    const touchEnd = e.touches[0].clientX;
+    const diff = touchStart - touchEnd;
+
+    if (Math.abs(diff) > 50) {
+      handleCategoryChange(diff > 0 ? 'next' : 'prev');
+      setTouchStart(null);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setTouchStart(null);
   };
 
   const currentEmojis = emojiCategories[category].emojis.filter(emoji => 
@@ -97,7 +124,13 @@ export function EmojiPicker() {
         </Button>
       </div>
 
-      <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-1 sm:gap-2">
+      <div 
+        ref={containerRef}
+        className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-1 sm:gap-2"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         {currentEmojis.map((emoji, index) => (
           <DraggableEmoji key={index} emoji={emoji.char} triggerHaptic={triggerHaptic} />
         ))}

@@ -12,10 +12,25 @@
   }
 }
 @keyframes wubble {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.1) rotate(-5deg); }
+  75% { transform: scale(1.1) rotate(5deg); }
 }
 
 .animate-wubble {
-  animation: wubble 1s ease-in-out infinite;
+  animation: wubble 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(135, 206, 235, 0.5); }
+  50% { box-shadow: 0 0 15px rgba(135, 206, 235, 0.8); }
+}
+
+.glow-effect {
+  animation: glow 1.5s ease-in-out infinite;
+}
+
+.pixel-art {
+  image-rendering: pixelated;
+  transform-origin: center;
 }

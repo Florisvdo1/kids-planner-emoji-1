@@ -1,0 +1,118 @@
+Refined and Comprehensive Instructions for Replit Agent LLM
+
+Below is the updated, clear, and detailed set of instructions combining all refinements, including the new toggle effect for the Homework button, as well as previous refinements from the most recent output above. These instructions ensure the Replit.com Agent LLM, acting as a mobile web developer, fully understands the requirements and outputs all necessary files.
+
+Full Instruction Set
+
+1. Homework Button Refinement
+
+	•	Placement:
+	•	Position the Homework button under the Evening grid to save space for other elements in the viewport.
+	•	Toggle Effect:
+	•	The Homework button must toggle between two states:
+	1.	Red State:
+	•	Indicates that homework is not completed.
+	•	The button has a red container with pixel-art-styled text “Homework”.
+	2.	Green State:
+	•	Indicates that homework is completed.
+	•	The button turns green with a thumbs-up emoji appearing next to the text.
+	•	Include a shaking (wubbling) animation for the thumbs-up emoji when toggled to green.
+	•	Behavior:
+	•	On each click:
+	•	The button toggles between red and green states.
+	•	The emoji (thumbs-up) appears or disappears based on the state.
+
+2. Drag-and-Drop Enhancements
+
+	•	Smooth Drag Animation:
+	•	When a user drags an emoji:
+	•	Scale the emoji slightly larger (e.g., 1.2x or 1.3x size) for a visual indication of dragging.
+	•	Use smooth transitions for scaling animations.
+	•	Magnet Effect:
+	•	Add a proximity snapping effect when an emoji is close to a placeholder.
+	•	Highlight the target placeholder with a glowing border to indicate the drop zone.
+	•	Touch Feedback:
+	•	Implement a vibration effect using the navigator.vibrate API when a user starts dragging an emoji.
+	•	Swapping Between Placeholders:
+	•	Allow users to drag an emoji from one placeholder to another within the Morning, Midday, and Evening sections.
+	•	Include a smooth swapping animation when emojis are swapped between placeholders.
+
+3. Emoji Deck Navigation
+
+	•	Arrow Buttons:
+	•	Fix the left (◀️) and right (▶️) navigation buttons to switch between emoji categories correctly.
+	•	Ensure buttons work seamlessly on all devices.
+	•	Swipe Gesture:
+	•	Add support for swipe gestures to navigate between emoji categories on mobile devices.
+	•	Ensure the swipe gesture is smooth and responsive.
+
+4. Reset Button
+
+	•	Behavior:
+	•	Ensure the Reset button clears all placeholders in the Morning, Midday, and Evening sections.
+	•	The Reset button should not affect other UI components.
+
+5. Tutorial Overlay
+
+	•	First-Time Load Tutorial:
+	•	Display a detailed overlay when the app is loaded for the first time.
+	•	The tutorial should include:
+	•	Steps explaining how to use the emoji deck, drag-and-drop functionality, and the Homework button.
+	•	Navigation controls: Next, Previous, and Skip buttons.
+	•	A final Start button to exit the tutorial and begin using the app.
+	•	Design:
+	•	Use pixel-art styling for the overlay and buttons.
+	•	Ensure the overlay is responsive and does not block any UI components unnecessarily.
+
+Behavior and Testing Requirements
+
+Homework Button:
+
+	•	Test the toggle functionality:
+	•	Verify the button switches between red and green states on each click.
+	•	Ensure the thumbs-up emoji appears with a shaking animation when toggled to green.
+
+Drag-and-Drop System:
+
+	•	Test all drag-and-drop interactions:
+	•	Ensure emojis can be dragged from the emoji deck and placed into placeholders.
+	•	Verify swapping functionality between placeholders.
+
+Emoji Deck Navigation:
+
+	•	Test the left and right buttons for navigating categories.
+	•	Validate swipe gestures for smooth navigation on mobile devices.
+
+Reset Button:
+
+	•	Ensure all placeholders are cleared when the Reset button is clicked.
+	•	Verify no residual emojis remain after a reset.
+
+Tutorial Overlay:
+
+	•	Test the tutorial overlay on first load:
+	•	Ensure all steps are navigable using the Next and Previous buttons.
+	•	Confirm the Skip button bypasses the tutorial correctly.
+
+Output Requirements
+
+1. script.js
+
+	•	Implement:
+	•	Drag-and-drop functionality, including scaling, snapping, and touch feedback.
+	•	Toggle logic for the Homework button.
+	•	Swipe gestures and category navigation for the emoji deck.
+	•	Tutorial overlay logic with navigation controls.
+
+2. style.css
+
+	•	Add:
+	•	Styles for the Homework button (red and green states with animations).
+	•	Placeholder highlighting and scaling effects.
+	•	Responsive styles for the tutorial overlay.
+
+3. index.html
+
+	•	Include:
+	•	Updated structure for the Homework button, emoji deck, and placeholders.
+	•	Tutorial overlay markup.

@@ -19,25 +19,38 @@ export const HomeworkButton = forwardRef<{ reset: () => void }, {}>(({}, ref) =>
     <Button
       variant="outline"
       className={`
-        w-full h-12 relative transition-all duration-300
-        ${isChecked ? 'bg-[#4CAF50] text-white' : 'bg-[#FF5252] text-white'}
+        w-full h-14 relative transition-all duration-300 overflow-hidden
+        ${isChecked ? 'bg-[#4CAF50] hover:bg-[#45a049]' : 'bg-[#FF5252] hover:bg-[#ff4040]'}
+        text-white border-2 border-white/20
       `}
       onClick={handleToggle}
     >
-      <div className="flex items-center gap-2">
+      <div className="flex items-center justify-center gap-3">
         {isChecked && (
           <div className="animate-wubble">
-            <div className="w-6 h-6 relative">
-              <div className="absolute w-2 h-4 bg-current" style={{ top: '0px', left: '2px' }} />
-              <div className="absolute w-4 h-2 bg-current" style={{ top: '0px', left: '2px' }} />
-              <div className="absolute w-2 h-3 bg-current" style={{ top: '3px', left: '4px' }} />
+            <div className="w-8 h-8 relative pixel-art">
+              {/* Pixel art thumb */}
+              <div className="absolute bg-white w-4 h-2" style={{ top: '0px', left: '2px' }} />
+              <div className="absolute bg-white w-2 h-4" style={{ top: '2px', left: '6px' }} />
+              <div className="absolute bg-white w-2 h-6" style={{ top: '2px', left: '2px' }} />
+              <div className="absolute bg-white w-4 h-2" style={{ top: '6px', left: '0px' }} />
             </div>
           </div>
         )}
-        <span className="font-medium">
+        <span className="font-pixel text-lg tracking-wide">
           Homework
         </span>
       </div>
+
+      <style jsx>{`
+        .pixel-art * {
+          transform-origin: center;
+          image-rendering: pixelated;
+        }
+        .font-pixel {
+          font-family: 'Press Start 2P', system-ui, sans-serif;
+        }
+      `}</style>
     </Button>
   );
 });
