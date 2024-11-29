@@ -23,6 +23,25 @@ function Placeholder({ emoji, onDrop, index, onEmojiSwap }: PlaceholderProps) {
         onDrop(item);
       }
     },
+    hover: (item, monitor) => {
+      const clientOffset = monitor.getClientOffset();
+      if (!clientOffset) return;
+      
+      const hoverBoundingRect = (drop as any).current?.getBoundingClientRect();
+      if (!hoverBoundingRect) return;
+      
+      const distance = Math.sqrt(
+        Math.pow(clientOffset.x - (hoverBoundingRect.left + hoverBoundingRect.width / 2), 2) +
+        Math.pow(clientOffset.y - (hoverBoundingRect.top + hoverBoundingRect.height / 2), 2)
+      );
+      
+      // Add proximity effect when within 50px
+      if (distance < 50) {
+        (drop as any).current?.style.setProperty('--proximity-glow', `${(1 - distance / 50) * 20}px`);
+      } else {
+        (drop as any).current?.style.setProperty('--proximity-glow', '0px');
+      }
+    },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
@@ -50,12 +69,13 @@ function Placeholder({ emoji, onDrop, index, onEmojiSwap }: PlaceholderProps) {
         text-base sm:text-lg md:text-xl
         transition-all duration-300 ease-out
         relative z-10
-        ${isOver ? 'border-primary shadow-xl scale-110 glow-effect' : 'border-gray-300 hover:shadow-lg'}
-        ${isDragging ? 'opacity-50 scale-125 z-50 shadow-xl' : ''}
+        ${isOver ? 'border-primary shadow-2xl scale-130 glow-effect-strong' : 'border-gray-300 hover:shadow-lg'}
+        ${isDragging ? 'opacity-50 scale-130 z-50 shadow-2xl' : ''}
         ${canDrop ? 'bg-primary/10' : emoji ? 'bg-white hover:bg-gray-50/90' : 'bg-gray-50'}
         hover:scale-115
         touch-manipulation
         transform-gpu
+        transition-transform duration-200 ease-out
       `}
       style={{
         boxShadow: isOver ? '0 0 10px rgba(135, 206, 235, 0.5)' : 'none',

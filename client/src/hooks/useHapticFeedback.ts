@@ -2,9 +2,17 @@ export function useHapticFeedback() {
   return () => {
     if ('vibrate' in navigator) {
       try {
-        navigator.vibrate(75);
+        // Pattern: vibrate 100ms, pause 50ms, vibrate 100ms
+        navigator.vibrate([100, 50, 100]);
       } catch (error) {
-        console.warn('Vibration API error:', error instanceof Error ? error.message : 'Unknown error');
+        // Enhanced error handling with specific error types
+        if (error instanceof TypeError) {
+          console.warn('Vibration API type error:', error.message);
+        } else if (error instanceof SecurityError) {
+          console.warn('Vibration API security error:', error.message);
+        } else {
+          console.warn('Unexpected Vibration API error:', error instanceof Error ? error.message : 'Unknown error');
+        }
       }
     } else {
       console.debug('Vibration API not supported on this device');
