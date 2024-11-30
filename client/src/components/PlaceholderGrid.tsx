@@ -90,9 +90,9 @@ function Placeholder({ emoji, onDrop, index, onEmojiSwap, triggerHaptic }: Place
         if (emoji) drag(node);
       }}
       className={`
-        w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18
+        w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16
         border-2 rounded-lg flex items-center justify-center
-        touch-manipulation
+        touch-manipulation relative
         text-base sm:text-lg md:text-xl
         transition-all duration-300 ease-out
         relative z-10 transform-gpu
@@ -164,9 +164,9 @@ export const PlaceholderGrid = forwardRef<{ reset: () => void }, PlaceholderGrid
   };
 
   return (
-    <Card className="p-1 sm:p-1.5 md:p-2 transform-gpu hover:glow-effect">
+    <Card className="p-2 sm:p-2.5 md:p-3 transform-gpu hover:glow-effect">
       <h3 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3">{title}</h3>
-      <div className="flex flex-wrap gap-1 sm:gap-1.5">
+      <div className="flex flex-wrap gap-2 sm:gap-2.5 md:gap-3">
         {placeholders.map((emoji, index) => (
           <Placeholder
             key={index}
