@@ -17,9 +17,10 @@ interface PlaceholderProps {
   onDrop: (item: { emoji: string }) => void;
   index: number;
   onEmojiSwap: (fromIndex: number, toIndex: number) => void;
+  triggerHaptic: () => void;
 }
 
-function Placeholder({ emoji, onDrop, index, onEmojiSwap }: PlaceholderProps) {
+function Placeholder({ emoji, onDrop, index, onEmojiSwap, triggerHaptic }: PlaceholderProps) {
   const [{ isOver, canDrop }, drop] = useDrop(() => ({
     accept: 'emoji',
     drop: (item: DragItem) => {
@@ -155,6 +156,7 @@ export const PlaceholderGrid = forwardRef<{ reset: () => void }, PlaceholderGrid
             index={index}
             onDrop={(item) => handleDrop(index, item)}
             onEmojiSwap={handleEmojiSwap}
+            triggerHaptic={triggerHaptic}
           />
         ))}
         

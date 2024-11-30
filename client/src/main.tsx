@@ -18,9 +18,11 @@ const touchBackendOptions = {
   enableMouseEvents: true,
   enableTouchEvents: true,
   enableKeyboardEvents: true,
-  delayTouchStart: 50,
+  delayTouchStart: 0,
   enableHoverOutsideTarget: true,
   ignoreContextMenu: true,
+  preview: true,
+  getNextTargetElementFromXY: true,
   scrollAngleRanges: [
     { start: 30, end: 150 },
     { start: 210, end: 330 }

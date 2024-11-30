@@ -27,6 +27,12 @@ function DraggableEmoji({ emoji, triggerHaptic }: DraggableEmojiProps) {
         triggerHaptic(); // Haptic feedback when dropping emoji
       }
     },
+    options: {
+      dropEffect: 'copy',
+    },
+    previewOptions: {
+      captureDraggingState: true,
+    },
   }));
 
   return (
