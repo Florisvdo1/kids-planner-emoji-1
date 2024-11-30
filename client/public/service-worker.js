@@ -9,54 +9,71 @@ const ASSETS_TO_CACHE = [
   '/assets/index.js'
 ];
 
-// Install event - cache assets
+// Install event - cache assets with improved error handling
 self.addEventListener('install', (event) => {
   console.log('[ServiceWorker] Install');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
         console.log('[ServiceWorker] Caching app shell');
-        return cache.addAll(ASSETS_TO_CACHE);
+        return Promise.all(
+          ASSETS_TO_CACHE.map(url => {
+            return cache.add(url).catch(error => {
+              console.error(`[ServiceWorker] Failed to cache ${url}:`, error);
+              return Promise.resolve(); // Continue with other files
+            });
+          })
+        );
       })
       .catch((error) => {
         console.error('[ServiceWorker] Cache failed:', error);
       })
   );
-  // Activate worker immediately
   self.skipWaiting();
 });
 
-// Fetch event - serve from cache, falling back to network
+// Fetch event - serve from cache with retry mechanism
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request)
-      .then((response) => {
+      .then(async (response) => {
+        // Return cached response if available
         if (response) {
           console.log('[ServiceWorker] Serving from cache:', event.request.url);
           return response;
         }
+
+        // Implement retry mechanism for network requests
+        const MAX_RETRIES = 3;
+        let retries = 0;
         
-        console.log('[ServiceWorker] Fetching resource:', event.request.url);
-        return fetch(event.request)
-          .then((response) => {
+        while (retries < MAX_RETRIES) {
+          try {
+            console.log(`[ServiceWorker] Fetching resource (attempt ${retries + 1}):`, event.request.url);
+            const networkResponse = await fetch(event.request);
+            
             // Cache valid responses
-            if (!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
+            if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+              const cache = await caches.open(CACHE_NAME);
+              cache.put(event.request, networkResponse.clone());
+              console.log('[ServiceWorker] Resource cached:', event.request.url);
             }
-
-            const responseToCache = response.clone();
-            caches.open(CACHE_NAME)
-              .then((cache) => {
-                cache.put(event.request, responseToCache);
+            
+            return networkResponse;
+          } catch (error) {
+            retries++;
+            console.warn(`[ServiceWorker] Fetch attempt ${retries} failed:`, error);
+            if (retries === MAX_RETRIES) {
+              console.error('[ServiceWorker] All fetch attempts failed');
+              return new Response('Offline content not available', {
+                status: 503,
+                statusText: 'Service Unavailable'
               });
-
-            return response;
-          })
-          .catch((error) => {
-            console.error('[ServiceWorker] Fetch failed:', error);
-            // You might want to return a custom offline page here
-            return new Response('Offline content not available');
-          });
+            }
+            // Wait before retrying (exponential backoff)
+            await new Promise(resolve => setTimeout(resolve, Math.pow(2, retries) * 1000));
+          }
+        }
       })
   );
 });
@@ -78,4 +95,11 @@ self.addEventListener('activate', (event) => {
   );
   // Ensure service worker takes control immediately
   clients.claim();
+});
+
+// Handle service worker updates
+self.addEventListener('message', (event) => {
+  if (event.data === 'skipWaiting') {
+    self.skipWaiting();
+  }
 });
