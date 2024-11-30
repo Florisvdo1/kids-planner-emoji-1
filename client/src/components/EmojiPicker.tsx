@@ -157,8 +157,8 @@ export function EmojiPicker() {
   const totalParts = emojiRows.length;
 
   return (
-    <Card className="p-2 sm:p-3 relative z-20">
-      <div className="flex gap-2 mb-3 sm:mb-4">
+    <Card className="p-1.5 sm:p-2 relative z-20">
+      <div className="flex gap-1.5 sm:gap-2 mb-2 sm:mb-3">
         <div className="relative flex-1">
           <Input
             type="text"
@@ -197,7 +197,7 @@ export function EmojiPicker() {
 
       <div 
         ref={containerRef}
-        className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 gap-1 sm:gap-1.5 md:gap-2 min-h-[120px] max-h-[180px] overflow-hidden touch-none"
+        className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 gap-1 sm:gap-1.5 h-[100px] sm:h-[120px] overflow-hidden touch-none"
       >
         {currentEmojis.length > 0 ? (
           currentEmojis.map((emoji, index) => (

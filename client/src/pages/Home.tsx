@@ -65,8 +65,8 @@ export default function Home() {
       {showTutorial && <TutorialOverlay onClose={handleCloseTutorial} />}
       <CloudBackground />
       
-      <main className="container mx-auto px-2 sm:px-4 lg:px-6 flex-1 overflow-hidden relative z-10">
-        <header className="flex justify-between items-center mb-8">
+      <main className="container mx-auto px-1.5 sm:px-3 lg:px-4 flex-1 overflow-hidden relative z-10">
+        <header className="flex justify-between items-center mb-4 sm:mb-6">
           <h1 className="text-xl sm:text-2xl font-bold text-white">
             Emoji Dagplanner
           </h1>
@@ -75,14 +75,14 @@ export default function Home() {
           </time>
         </header>
 
-        <div className="space-y-4">
+        <div className="space-y-2 sm:space-y-3">
           <PlaceholderGrid ref={morningGridRef} title="Morning" />
           <PlaceholderGrid ref={middayGridRef} title="Midday" />
           <PlaceholderGrid ref={eveningGridRef} title="Evening" />
           <HomeworkButton ref={homeworkButtonRef} />
         </div>
         
-        <div className="mt-8 space-y-6">
+        <div className="mt-4 sm:mt-6 space-y-4">
           <EmojiPicker />
           
           <Button 
