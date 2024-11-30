@@ -73,12 +73,24 @@ createRoot(document.getElementById("root")!).render(
 // Register Service Worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
+    navigator.serviceWorker.register('/service-worker.js', {
+      scope: '/',
+      updateViaCache: 'none'
+    })
       .then(registration => {
-        console.log('ServiceWorker registration successful');
+        console.log('ServiceWorker registration successful with scope:', registration.scope);
+        
+        registration.addEventListener('updatefound', () => {
+          const newWorker = registration.installing;
+          if (newWorker) {
+            newWorker.addEventListener('statechange', () => {
+              console.log('ServiceWorker state changed:', newWorker.state);
+            });
+          }
+        });
       })
       .catch(error => {
-        console.error('ServiceWorker registration failed:', error);
+        console.error('ServiceWorker registration failed:', error.message);
       });
   });
 }
