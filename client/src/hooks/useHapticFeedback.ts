@@ -3,7 +3,7 @@ export function useHapticFeedback() {
     if ('vibrate' in navigator) {
       try {
         // Pattern: vibrate 100ms, pause 50ms, vibrate 100ms
-        navigator.vibrate([100, 50, 100]);
+        navigator.vibrate([150, 50, 150]);
       } catch (error) {
         // Enhanced error handling with proper type checking
         if (error instanceof TypeError) {

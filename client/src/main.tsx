@@ -19,6 +19,7 @@ const touchBackendOptions = {
   enableTouchEvents: true,
   enableKeyboardEvents: true,
   delayTouchStart: 0,
+  touchSlop: 5, // Reduce touch movement threshold
   enableHoverOutsideTarget: true,
   ignoreContextMenu: true,
   preview: true,
@@ -26,7 +27,11 @@ const touchBackendOptions = {
   scrollAngleRanges: [
     { start: 30, end: 150 },
     { start: 210, end: 330 }
-  ]
+  ],
+  delayTouchStart: 0,
+  enableTapClick: true,
+  enableLongTapDrag: false, // Disable long press to drag
+  touchReleaseDelay: 0 // Immediate touch release
 };
 
 function Router() {
