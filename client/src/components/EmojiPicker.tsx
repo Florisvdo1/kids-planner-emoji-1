@@ -43,11 +43,11 @@ function DraggableEmoji({ emoji, triggerHaptic }: DraggableEmojiProps) {
     <button
       ref={drag}
       className={`
-        text-lg sm:text-xl lg:text-2xl rounded p-1.5 sm:p-2
+        w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded
+        p-1 sm:p-1.5 md:p-2
         transition-all duration-300 touch-manipulation
-        min-w-[40px] min-h-[40px]
         flex items-center justify-center
-        transform-gpu
+        transform-gpu text-base sm:text-lg md:text-xl
         ${isDragging 
           ? 'opacity-80 scale-125 rotate-2 shadow-2xl z-50 bg-white/90' 
           : 'hover:bg-gray-100 hover:scale-110 hover:shadow-lg'
@@ -197,7 +197,7 @@ export function EmojiPicker() {
 
       <div 
         ref={containerRef}
-        className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 gap-0.5 sm:gap-1 md:gap-2 min-h-[150px] max-h-[200px] touch-none"
+        className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 gap-1 sm:gap-1.5 md:gap-2 min-h-[120px] max-h-[180px] overflow-hidden touch-none"
       >
         {currentEmojis.length > 0 ? (
           currentEmojis.map((emoji, index) => (

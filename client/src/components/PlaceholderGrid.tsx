@@ -163,7 +163,7 @@ export const PlaceholderGrid = forwardRef<{ reset: () => void }, PlaceholderGrid
   };
 
   return (
-    <Card className="p-2 sm:p-3 transform-gpu hover:glow-effect">
+    <Card className="p-1.5 sm:p-2 md:p-3 transform-gpu hover:glow-effect">
       <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">{title}</h3>
       <div className="flex flex-wrap gap-1.5 sm:gap-2">
         {placeholders.map((emoji, index) => (
