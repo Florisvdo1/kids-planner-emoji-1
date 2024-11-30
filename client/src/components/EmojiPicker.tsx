@@ -212,7 +212,7 @@ export function EmojiPicker() {
 
       <div 
         ref={containerRef}
-        className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-2 sm:gap-2.5 h-[140px] sm:h-[160px] md:h-[180px] overflow-hidden touch-none"
+        className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-2 sm:gap-2.5 h-[120px] sm:h-[140px] md:h-[160px] overflow-hidden touch-none"
       >
         {currentEmojis.length > 0 ? (
           currentEmojis.map((emoji, index) => (

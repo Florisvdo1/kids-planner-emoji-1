@@ -75,3 +75,8 @@ body.dragging {
   image-rendering: pixelated;
   transform-origin: center;
 }
+@supports (-webkit-touch-callout: none) {
+  .has-bottom-bar {
+    padding-bottom: env(safe-area-inset-bottom, 133px);
+  }
+}

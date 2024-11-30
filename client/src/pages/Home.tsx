@@ -65,7 +65,7 @@ export default function Home() {
       {showTutorial && <TutorialOverlay onClose={handleCloseTutorial} />}
       <CloudBackground />
       
-      <main className="container mx-auto px-1.5 sm:px-3 lg:px-4 flex-1 overflow-hidden relative z-10">
+      <main className="container mx-auto px-1.5 sm:px-3 lg:px-4 flex-1 overflow-hidden relative z-10 pb-0">
         <header className="flex justify-between items-center mb-4 sm:mb-6">
           <h1 className="text-xl sm:text-2xl font-bold text-white">
             Emoji Dagplanner
@@ -93,6 +93,7 @@ export default function Home() {
             Reset Day
           </Button>
         </div>
+        <div className="h-[133px] w-full" aria-hidden="true" />
       </main>
     </div>
   );
