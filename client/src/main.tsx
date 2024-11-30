@@ -15,28 +15,39 @@ const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
 // Touch backend options for better handling
 const touchBackendOptions = {
-  enableMouseEvents: true,
+  enableMouseEvents: false, // Desktop interactions disabled
   enableTouchEvents: true,
   delayTouchStart: 0,
-  touchSlop: 2, // Reduced for more responsive touch detection
-  enableHoverOutsideTarget: true,
+  touchSlop: 10, // More forgiving touch detection
+  enableHoverOutsideTarget: false,
   ignoreContextMenu: true,
   preview: true,
   getNextTargetElementFromXY: true,
-  enableKeyboardEvents: true,
-  enableTapClick: false, // Disable tap to click for better drag detection
-  touchReleaseDelay: 50, // Small delay to ensure proper drop handling
-  anchors: ['button'], // Specify draggable elements
-  offsetTarget: { x: 0, y: -4 }, // Offset touch position for better accuracy
-  scrollAngleRanges: [
-    { start: 30, end: 150 },
-    { start: 210, end: 330 }
-  ],
+  enableKeyboardEvents: false,
+  enableTapClick: false,
+  touchReleaseDelay: 100, // Increased delay for better drop handling
+  anchors: ['button'],
+  offsetTarget: { 
+    x: 0, 
+    y: -20 // Increased offset to prevent finger from blocking view
+  },
+  scrollAngleRanges: null, // Disable scroll detection
   onScheduleHover: () => {
     document.body.classList.add('dragging');
+    // Prevent scroll during drag
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
   },
   onEndDrag: () => {
     document.body.classList.remove('dragging');
+    // Re-enable scroll after drag
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+  },
+  // Enhanced preview handling
+  previewOptions: {
+    captureDraggingState: true,
+    showPreview: true
   }
 };
 

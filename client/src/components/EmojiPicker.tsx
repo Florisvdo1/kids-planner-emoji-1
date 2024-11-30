@@ -52,7 +52,14 @@ function DraggableEmoji({ emoji, triggerHaptic }: DraggableEmojiProps) {
           : 'hover:bg-gray-100 hover:scale-110 hover:shadow-lg active:scale-125 active:bg-primary/10'
         }
         transition-transform duration-300 ease-out
+        touch-feedback
       `}
+      style={{
+        touchAction: 'none',
+        WebkitTouchCallout: 'none',
+        WebkitUserSelect: 'none',
+        userSelect: 'none'
+      }}
       onClick={() => triggerHaptic()}
       onTouchStart={(e) => {
         e.preventDefault();
@@ -64,8 +71,8 @@ function DraggableEmoji({ emoji, triggerHaptic }: DraggableEmojiProps) {
       }}
       aria-label={`Select ${emoji}`}
     >
-      <div className="absolute inset-[-8px] touch-none" /> {/* Enlarged invisible touch target */}
-      <span className="text-base sm:text-lg md:text-xl p-2 sm:p-2.5 md:p-3 pointer-events-none">
+      <div className="absolute inset-[-11px] touch-none" /> {/* 44px touch target (22px on each side) */}
+      <span className="text-base sm:text-lg md:text-xl p-2 sm:p-2.5 md:p-3 pointer-events-none select-none">
         {emoji}
       </span>
     </button>
