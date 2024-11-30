@@ -6,6 +6,12 @@ import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import { useHapticFeedback } from '../hooks/useHapticFeedback';
 
+interface DragItem {
+  emoji: string;
+  sourceIndex?: number;
+  hasTriggeredProximity?: boolean;
+}
+
 interface PlaceholderProps {
   emoji: string | null;
   onDrop: (item: { emoji: string }) => void;
@@ -16,7 +22,7 @@ interface PlaceholderProps {
 function Placeholder({ emoji, onDrop, index, onEmojiSwap }: PlaceholderProps) {
   const [{ isOver, canDrop }, drop] = useDrop(() => ({
     accept: 'emoji',
-    drop: (item: { emoji: string; sourceIndex?: number }) => {
+    drop: (item: DragItem) => {
       if (typeof item.sourceIndex === 'number') {
         onEmojiSwap(item.sourceIndex, index);
       } else {

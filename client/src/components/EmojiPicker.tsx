@@ -15,13 +15,13 @@ interface DraggableEmojiProps {
 function DraggableEmoji({ emoji, triggerHaptic }: DraggableEmojiProps) {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'emoji',
-    item: { emoji },
+    item: () => {
+      triggerHaptic(); // Haptic feedback when starting drag
+      return { emoji, hasTriggeredProximity: false };
+    },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
-    begin: () => {
-      triggerHaptic(); // Haptic feedback when starting drag
-    },
     end: (item, monitor) => {
       if (monitor.didDrop()) {
         triggerHaptic(); // Haptic feedback when dropping emoji
