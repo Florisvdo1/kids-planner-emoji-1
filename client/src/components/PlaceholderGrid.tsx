@@ -43,13 +43,16 @@ function Placeholder({ emoji, onDrop, index, onEmojiSwap, triggerHaptic }: Place
       );
       
       // Enhanced proximity effect with stronger magnetic pull
-      const MAGNETIC_THRESHOLD = 60; // Increased for better touch detection
-      const HAPTIC_THRESHOLD = 40; // Increased for more responsive feedback
+      const MAGNETIC_THRESHOLD = 80; // Further increased for better touch detection
+      const HAPTIC_THRESHOLD = 50; // Increased threshold for touch devices
+      const STRONG_PULL_THRESHOLD = 30; // Threshold for stronger magnetic effect
       
       if (distance < MAGNETIC_THRESHOLD) {
-        // Exponential intensity for stronger magnetic effect
-        const intensity = Math.pow(1 - distance / MAGNETIC_THRESHOLD, 2);
-        const glowSize = Math.min(40, intensity * 40); // Max glow size of 40px
+        // Enhanced exponential intensity with stronger pull at close range
+        const intensity = distance < STRONG_PULL_THRESHOLD
+          ? Math.pow(1 - distance / STRONG_PULL_THRESHOLD, 1.5)
+          : Math.pow(1 - distance / MAGNETIC_THRESHOLD, 2);
+        const glowSize = Math.min(50, intensity * 50); // Increased max glow size
         
         (drop as any).current?.style.setProperty('--proximity-glow', `${glowSize}px`);
         (drop as any).current?.style.setProperty('--glow-opacity', `${intensity}`);

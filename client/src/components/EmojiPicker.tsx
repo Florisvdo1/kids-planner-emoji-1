@@ -44,22 +44,28 @@ function DraggableEmoji({ emoji, triggerHaptic }: DraggableEmojiProps) {
       ref={drag}
       className={`
         relative w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18 rounded
-        transition-all duration-300 touch-manipulation select-none
+        transition-all duration-300 touch-none select-none
         flex items-center justify-center
-        transform-gpu
+        transform-gpu will-change-transform
         ${isDragging 
           ? 'opacity-90 scale-125 rotate-2 shadow-2xl z-50 bg-white/95 ring-2 ring-primary/30' 
           : 'hover:bg-gray-100 hover:scale-110 hover:shadow-lg active:scale-125 active:bg-primary/10'
         }
-        transition-transform duration-300 ease-out will-change-transform
-        motion-reduce:transition-none
-        motion-reduce:transform-none
+        transition-transform duration-300 ease-out
       `}
       onClick={() => triggerHaptic()}
+      onTouchStart={(e) => {
+        e.preventDefault();
+        triggerHaptic();
+        document.body.classList.add('dragging');
+      }}
+      onTouchEnd={() => {
+        document.body.classList.remove('dragging');
+      }}
       aria-label={`Select ${emoji}`}
     >
-      <div className="absolute inset-0" /> {/* Invisible touch target */}
-      <span className="text-base sm:text-lg md:text-xl p-2 sm:p-2.5 md:p-3">
+      <div className="absolute inset-[-8px] touch-none" /> {/* Enlarged invisible touch target */}
+      <span className="text-base sm:text-lg md:text-xl p-2 sm:p-2.5 md:p-3 pointer-events-none">
         {emoji}
       </span>
     </button>

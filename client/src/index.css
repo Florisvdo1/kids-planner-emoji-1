@@ -12,10 +12,39 @@
   }
 }
 body.dragging {
-  overflow: hidden;
-  touch-action: none;
-  user-select: none;
-  -webkit-user-select: none;
+  overflow: hidden !important;
+  touch-action: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  overscroll-behavior: none !important;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+/* Enhanced touch feedback */
+@media (hover: none) and (pointer: coarse) {
+  .touch-feedback {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  
+  .touch-feedback:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease-out;
+  }
+}
+
+/* Smoother animations for touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .transform-gpu {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
 }
 
 @keyframes wubble {

@@ -18,17 +18,26 @@ const touchBackendOptions = {
   enableMouseEvents: true,
   enableTouchEvents: true,
   delayTouchStart: 0,
-  touchSlop: 5,
+  touchSlop: 2, // Reduced for more responsive touch detection
   enableHoverOutsideTarget: true,
   ignoreContextMenu: true,
   preview: true,
   getNextTargetElementFromXY: true,
+  enableKeyboardEvents: true,
+  enableTapClick: false, // Disable tap to click for better drag detection
+  touchReleaseDelay: 50, // Small delay to ensure proper drop handling
+  anchors: ['button'], // Specify draggable elements
+  offsetTarget: { x: 0, y: -4 }, // Offset touch position for better accuracy
   scrollAngleRanges: [
     { start: 30, end: 150 },
     { start: 210, end: 330 }
   ],
-  enableTapClick: true,
-  touchReleaseDelay: 0
+  onScheduleHover: () => {
+    document.body.classList.add('dragging');
+  },
+  onEndDrag: () => {
+    document.body.classList.remove('dragging');
+  }
 };
 
 function Router() {
