@@ -17,6 +17,7 @@ function DraggableEmoji({ emoji, triggerHaptic }: DraggableEmojiProps) {
     type: 'emoji',
     item: () => {
       triggerHaptic(); // Haptic feedback when starting drag
+      document.body.classList.add('dragging');
       return {
         emoji,
         hasTriggeredProximity: false,
@@ -27,6 +28,7 @@ function DraggableEmoji({ emoji, triggerHaptic }: DraggableEmojiProps) {
       isDragging: monitor.isDragging(),
     }),
     end: (item, monitor) => {
+      document.body.classList.remove('dragging');
       if (monitor.didDrop()) {
         triggerHaptic(); // Haptic feedback when dropping emoji
       }
@@ -195,7 +197,7 @@ export function EmojiPicker() {
 
       <div 
         ref={containerRef}
-        className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 gap-0.5 sm:gap-1 md:gap-2 min-h-[200px]"
+        className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 gap-0.5 sm:gap-1 md:gap-2 min-h-[150px] max-h-[200px] touch-none"
       >
         {currentEmojis.length > 0 ? (
           currentEmojis.map((emoji, index) => (

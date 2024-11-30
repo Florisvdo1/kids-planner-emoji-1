@@ -11,6 +11,13 @@
     @apply font-sans antialiased bg-background text-foreground;
   }
 }
+body.dragging {
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 @keyframes wubble {
   0%, 100% { transform: scale(1) rotate(0deg); }
   25% { transform: scale(1.1) rotate(-5deg); }

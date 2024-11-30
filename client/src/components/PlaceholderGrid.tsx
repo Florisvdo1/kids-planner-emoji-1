@@ -110,11 +110,12 @@ function Placeholder({ emoji, onDrop, index, onEmojiSwap, triggerHaptic }: Place
             : 'bg-gray-50'
         }
         hover:scale-110
-        touch-manipulation
+        ${isDragging || isOver ? 'touch-none' : 'touch-manipulation'}
         transition-transform duration-300 ease-out will-change-transform
         motion-reduce:transition-none
         motion-reduce:hover:transform-none
         [transform:scale(var(--scale,1))]
+        cursor-grab active:cursor-grabbing
       `}
       style={{
         boxShadow: isOver ? '0 0 10px rgba(135, 206, 235, 0.5)' : 'none',

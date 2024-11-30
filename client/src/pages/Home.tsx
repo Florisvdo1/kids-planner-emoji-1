@@ -61,11 +61,11 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-[#87CEEB] font-nunito relative overflow-hidden">
+    <div className="h-screen flex flex-col bg-[#87CEEB] font-nunito relative overflow-hidden">
       {showTutorial && <TutorialOverlay onClose={handleCloseTutorial} />}
       <CloudBackground />
       
-      <main className="container mx-auto px-2 sm:px-4 lg:px-6 py-3 sm:py-4 relative z-10">
+      <main className="container mx-auto px-2 sm:px-4 lg:px-6 flex-1 overflow-hidden relative z-10">
         <header className="flex justify-between items-center mb-8">
           <h1 className="text-xl sm:text-2xl font-bold text-white">
             Emoji Dagplanner
