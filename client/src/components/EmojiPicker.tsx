@@ -37,8 +37,10 @@ function DraggableEmoji({ emoji, triggerHaptic }: DraggableEmojiProps) {
         transition-all duration-200 touch-manipulation
         min-w-[40px] min-h-[40px]
         flex items-center justify-center
-        ${isDragging ? 'opacity-50 scale-125 rotate-1 shadow-xl' : 'hover:bg-gray-100 hover:scale-110'}
+        ${isDragging ? 'opacity-70 scale-125 rotate-1 shadow-xl' : 'hover:bg-gray-100 hover:scale-110'}
         transition-all duration-300 ease-out transform-gpu will-change-transform
+        motion-reduce:transition-none
+        motion-reduce:transform-none
       `}
       onClick={() => triggerHaptic()}
       aria-label={`Select ${emoji}`}
