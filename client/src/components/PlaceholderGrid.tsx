@@ -43,8 +43,8 @@ function Placeholder({ emoji, onDrop, index, onEmojiSwap, triggerHaptic }: Place
       );
       
       // Enhanced proximity effect with stronger magnetic pull
-      const MAGNETIC_THRESHOLD = 40;
-      const HAPTIC_THRESHOLD = 25;
+      const MAGNETIC_THRESHOLD = 60; // Increased for better touch detection
+      const HAPTIC_THRESHOLD = 40; // Increased for more responsive feedback
       
       if (distance < MAGNETIC_THRESHOLD) {
         // Exponential intensity for stronger magnetic effect
@@ -90,8 +90,9 @@ function Placeholder({ emoji, onDrop, index, onEmojiSwap, triggerHaptic }: Place
         if (emoji) drag(node);
       }}
       className={`
-        w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14
+        w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18
         border-2 rounded-lg flex items-center justify-center
+        touch-manipulation
         text-base sm:text-lg md:text-xl
         transition-all duration-300 ease-out
         relative z-10 transform-gpu

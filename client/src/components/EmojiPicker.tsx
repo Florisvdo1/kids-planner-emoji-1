@@ -43,8 +43,8 @@ function DraggableEmoji({ emoji, triggerHaptic }: DraggableEmojiProps) {
     <button
       ref={drag}
       className={`
-        w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18 rounded
-        p-2 sm:p-2.5 md:p-3
+        w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded
+        p-2.5 sm:p-3 md:p-3.5
         transition-all duration-300 touch-manipulation select-none
         flex items-center justify-center
         transform-gpu text-base sm:text-lg md:text-xl

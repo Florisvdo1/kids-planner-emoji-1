@@ -17,9 +17,8 @@ const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 const touchBackendOptions = {
   enableMouseEvents: true,
   enableTouchEvents: true,
-  enableKeyboardEvents: true,
   delayTouchStart: 0,
-  touchSlop: 5, // Reduce touch movement threshold
+  touchSlop: 5,
   enableHoverOutsideTarget: true,
   ignoreContextMenu: true,
   preview: true,
@@ -28,10 +27,8 @@ const touchBackendOptions = {
     { start: 30, end: 150 },
     { start: 210, end: 330 }
   ],
-  delayTouchStart: 0,
   enableTapClick: true,
-  enableLongTapDrag: false, // Disable long press to drag
-  touchReleaseDelay: 0 // Immediate touch release
+  touchReleaseDelay: 0
 };
 
 function Router() {
