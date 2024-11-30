@@ -42,12 +42,18 @@ function Placeholder({ emoji, onDrop, index, onEmojiSwap, triggerHaptic }: Place
         Math.pow(clientOffset.y - (hoverBoundingRect.top + hoverBoundingRect.height / 2), 2)
       );
       
-      // Enhanced proximity effect for more precise snapping
-      if (distance < 35) {
-        const intensity = Math.pow(1 - distance / 35, 1.5); // More pronounced effect
-        (drop as any).current?.style.setProperty('--proximity-glow', `${intensity * 30}px`);
+      // Enhanced proximity effect with stronger magnetic pull
+      const MAGNETIC_THRESHOLD = 40;
+      const HAPTIC_THRESHOLD = 25;
+      
+      if (distance < MAGNETIC_THRESHOLD) {
+        // Exponential intensity for stronger magnetic effect
+        const intensity = Math.pow(1 - distance / MAGNETIC_THRESHOLD, 2);
+        const glowSize = Math.min(40, intensity * 40); // Max glow size of 40px
+        
+        (drop as any).current?.style.setProperty('--proximity-glow', `${glowSize}px`);
         (drop as any).current?.style.setProperty('--glow-opacity', `${intensity}`);
-        (drop as any).current?.style.setProperty('--scale', `${1 + intensity * 0.25}`);
+        (drop as any).current?.style.setProperty('--scale', `${1 + intensity * 0.3}`);
         // Only trigger haptic when crossing the threshold
         if (distance < 20 && !monitor.getItem().hasTriggeredProximity) {
           triggerHaptic();
@@ -88,14 +94,24 @@ function Placeholder({ emoji, onDrop, index, onEmojiSwap, triggerHaptic }: Place
         border-2 rounded-lg flex items-center justify-center
         text-base sm:text-lg md:text-xl
         transition-all duration-300 ease-out
-        relative z-10
-        ${isOver ? 'border-primary shadow-2xl glow-effect-strong' : 'border-gray-300 hover:shadow-lg'}
-        ${isDragging ? 'opacity-50 rotate-2 z-50 shadow-2xl' : ''}
-        ${canDrop ? 'bg-primary/10' : emoji ? 'bg-white hover:bg-gray-50/90' : 'bg-gray-50'}
+        relative z-10 transform-gpu
+        ${isOver 
+          ? 'border-primary shadow-2xl glow-effect-strong ring-2 ring-primary/30 scale-110' 
+          : 'border-gray-300 hover:shadow-lg'
+        }
+        ${isDragging 
+          ? 'opacity-70 rotate-3 z-50 shadow-2xl scale-125 bg-white' 
+          : ''
+        }
+        ${canDrop 
+          ? 'bg-primary/10 hover:bg-primary/20' 
+          : emoji 
+            ? 'bg-white hover:bg-gray-50/90' 
+            : 'bg-gray-50'
+        }
         hover:scale-110
         touch-manipulation
-        transform-gpu
-        transition-all duration-300 ease-out will-change-transform
+        transition-transform duration-300 ease-out will-change-transform
         motion-reduce:transition-none
         motion-reduce:hover:transform-none
         [transform:scale(var(--scale,1))]

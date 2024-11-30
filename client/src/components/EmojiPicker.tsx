@@ -17,7 +17,11 @@ function DraggableEmoji({ emoji, triggerHaptic }: DraggableEmojiProps) {
     type: 'emoji',
     item: () => {
       triggerHaptic(); // Haptic feedback when starting drag
-      return { emoji, hasTriggeredProximity: false };
+      return {
+        emoji,
+        hasTriggeredProximity: false,
+        type: 'emoji'
+      };
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -29,9 +33,7 @@ function DraggableEmoji({ emoji, triggerHaptic }: DraggableEmojiProps) {
     },
     options: {
       dropEffect: 'copy',
-    },
-    previewOptions: {
-      captureDraggingState: true,
+      enableTouchEvents: true,
     },
   }));
 
@@ -40,11 +42,15 @@ function DraggableEmoji({ emoji, triggerHaptic }: DraggableEmojiProps) {
       ref={drag}
       className={`
         text-lg sm:text-xl lg:text-2xl rounded p-1.5 sm:p-2
-        transition-all duration-200 touch-manipulation
+        transition-all duration-300 touch-manipulation
         min-w-[40px] min-h-[40px]
         flex items-center justify-center
-        ${isDragging ? 'opacity-70 scale-125 rotate-1 shadow-xl' : 'hover:bg-gray-100 hover:scale-110'}
-        transition-all duration-300 ease-out transform-gpu will-change-transform
+        transform-gpu
+        ${isDragging 
+          ? 'opacity-80 scale-125 rotate-2 shadow-2xl z-50 bg-white/90' 
+          : 'hover:bg-gray-100 hover:scale-110 hover:shadow-lg'
+        }
+        transition-transform duration-300 ease-out will-change-transform
         motion-reduce:transition-none
         motion-reduce:transform-none
       `}
