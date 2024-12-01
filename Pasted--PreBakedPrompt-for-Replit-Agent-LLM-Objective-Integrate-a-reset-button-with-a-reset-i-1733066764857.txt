@@ -1,0 +1,30 @@
+**PreBakedPrompt for Replit Agent LLM:**  
+
+**Objective:**  
+Integrate a reset button with a reset icon (e.g., a circular arrow) in the top-right corner of the emoji planner web application. The button must visually align with the app's design and reset all emoji actions when clicked. Ensure that all text elements associated with the button, including the confirmation dialog, match the font styling of the existing text inputs in the Emoji Planner.
+
+**Detailed Instructions:**  
+
+1. **Placement and Alignment:**  
+   - Position the reset button in the top-right corner of the header or main container, ensuring it is visually distinct and does not overlap with other elements.  
+   - Use absolute positioning with appropriate spacing and padding for clarity and alignment.
+
+2. **Styling and Design:**  
+   - Use a reset icon sized at 24x24 pixels, ensuring scalability across devices without losing clarity.  
+   - Match the font styling of all text associated with the reset button (e.g., dialog text, button labels) to the font already used in the Emoji Planner’s text inputs. This includes font family, size, weight, and color for a consistent design.  
+   - Adhere to the app's color scheme and design principles for seamless integration.  
+
+3. **Functionality:**  
+   - Assign a `click` event to the button that opens a confirmation dialog with the message: “Are you sure you want to reset?” Include clear options for confirming or canceling the reset.  
+   - Upon confirmation, clear all selected emojis and return the app to its default state.  
+
+4. **Accessibility:**  
+   - Use the same font styling for the dialog text as the existing Emoji Planner inputs for consistency. Avoid default fonts or mismatches.  
+   - Enhance the hover and focus states of the button with clear visual cues such as a background color change or outline effect, ensuring accessibility compliance.  
+
+5. **Responsiveness:**  
+   - Ensure the button’s placement and functionality adapt across devices (mobile, tablet, and desktop) and resolutions, from 320px to 1920px. Validate alignment and scaling for all viewports.
+
+6. **Testing and Validation:**  
+   - Test functionality across all major browsers (Chrome, Firefox, Safari, Edge) and platforms (iOS, Android, desktop).  
+   - Validate that the reset button integrates seamlessly with the existing Emoji Planner structure and styling, avoiding UI conflicts.

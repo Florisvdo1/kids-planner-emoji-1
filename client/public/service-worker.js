@@ -3,10 +3,12 @@ const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
   '/manifest.json',
+  '/offline.html',
   '/icons/icon-192x192.png',
   '/icons/icon-512x512.png',
   '/assets/index.css',
-  '/assets/index.js'
+  '/assets/index.js',
+  '/assets/fonts/PressStart2P-Regular.ttf'
 ];
 
 // Install event - cache assets with improved error handling
@@ -20,7 +22,8 @@ self.addEventListener('install', (event) => {
           ASSETS_TO_CACHE.map(url => {
             return cache.add(url).catch(error => {
               console.error(`[ServiceWorker] Failed to cache ${url}:`, error);
-              return Promise.resolve(); // Continue with other files
+              // Continue with other files even if one fails
+              return Promise.resolve();
             });
           })
         );
@@ -63,13 +66,22 @@ self.addEventListener('fetch', (event) => {
           } catch (error) {
             retries++;
             console.warn(`[ServiceWorker] Fetch attempt ${retries} failed:`, error);
+            
+            // On final retry, return offline page for document requests
             if (retries === MAX_RETRIES) {
               console.error('[ServiceWorker] All fetch attempts failed');
+              
+              // Return offline page for navigation requests
+              if (event.request.mode === 'navigate') {
+                return caches.match('/offline.html');
+              }
+              
               return new Response('Offline content not available', {
                 status: 503,
                 statusText: 'Service Unavailable'
               });
             }
+            
             // Wait before retrying (exponential backoff)
             await new Promise(resolve => setTimeout(resolve, Math.pow(2, retries) * 1000));
           }
