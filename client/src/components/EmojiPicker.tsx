@@ -114,9 +114,33 @@ export function EmojiPicker() {
   }, [category]);
 
   const getFilteredEmojis = () => {
-    return emojiCategories[category].emojis.filter(emoji => 
-      emoji.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    if (!searchTerm.trim()) {
+      return emojiCategories[category].emojis;
+    }
+
+    const searchLower = searchTerm.toLowerCase().trim();
+    const words = searchLower.split(/\s+/);
+
+    // If searching, show results from all categories
+    if (searchLower) {
+      const allResults = emojiCategories.flatMap(cat => 
+        cat.emojis.filter(emoji => {
+          const nameMatch = words.every(word => 
+            emoji.name.toLowerCase().includes(word)
+          );
+          // Also match by emoji character for direct searches
+          const charMatch = emoji.char === searchTerm;
+          return nameMatch || charMatch;
+        })
+      );
+
+      // Remove duplicates if any
+      return Array.from(new Map(allResults.map(item => 
+        [item.char, item]
+      )).values());
+    }
+
+    return emojiCategories[category].emojis;
   };
 
   const splitIntoRows = (emojis: typeof emojiCategories[0]['emojis']) => {
@@ -177,12 +201,21 @@ export function EmojiPicker() {
         <div className="relative flex-1">
           <Input
             type="text"
-            placeholder="Search emojis..."
+            placeholder="Search emojis (e.g., 'happy face' or '🎮')"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              // Reset to first page when searching
+              setPart(0);
+            }}
             className="w-full pl-8 h-10 sm:h-11"
+            onFocus={() => triggerHaptic()}
           />
-          <Search className="w-4 h-4 absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
+          <Search 
+            className={`w-4 h-4 absolute left-2 top-1/2 transform -translate-y-1/2 transition-colors duration-200 ${
+              searchTerm ? 'text-primary' : 'text-gray-500'
+            }`} 
+          />
         </div>
       </div>
 
@@ -223,8 +256,17 @@ export function EmojiPicker() {
             />
           ))
         ) : (
-          <div className="col-span-full flex items-center justify-center h-full text-gray-500">
-            {searchTerm ? 'No emojis found' : 'This category is empty'}
+          <div className="col-span-full flex flex-col items-center justify-center h-full text-gray-500">
+            {searchTerm ? (
+              <>
+                <span className="text-lg mb-1">No emojis found</span>
+                <span className="text-sm opacity-75">
+                  Try different keywords or check spelling
+                </span>
+              </>
+            ) : (
+              <span>This category is empty</span>
+            )}
           </div>
         )}
       </div>
