@@ -119,23 +119,55 @@ export function EmojiPicker() {
     }
 
     const searchLower = searchTerm.toLowerCase().trim();
-    const words = searchLower.split(/\s+/);
+    const words = searchLower.split(/\s+/).filter(word => word.length > 0);
 
     // If searching, show results from all categories
-    if (searchLower) {
+    if (words.length > 0) {
       const allResults = emojiCategories.flatMap(cat => 
         cat.emojis.filter(emoji => {
-          const nameMatch = words.every(word => 
-            emoji.name.toLowerCase().includes(word)
-          );
-          // Also match by emoji character for direct searches
-          const charMatch = emoji.char === searchTerm;
-          return nameMatch || charMatch;
+          const emojiNameLower = emoji.name.toLowerCase();
+          
+          // Direct emoji character match (highest priority)
+          if (emoji.char === searchTerm) {
+            return true;
+          }
+          
+          // Full phrase match (high priority)
+          if (emojiNameLower.includes(searchLower)) {
+            return true;
+          }
+          
+          // All words must match somewhere in the name
+          const allWordsMatch = words.every(word => {
+            // Check for word boundaries when possible
+            return emojiNameLower.includes(word);
+          });
+          
+          return allWordsMatch;
         })
       );
 
-      // Remove duplicates if any
-      return Array.from(new Map(allResults.map(item => 
+      // Sort results by relevance
+      const sortedResults = allResults.sort((a, b) => {
+        const aName = a.name.toLowerCase();
+        const bName = b.name.toLowerCase();
+        
+        // Direct character matches get highest priority
+        if (a.char === searchTerm) return -1;
+        if (b.char === searchTerm) return 1;
+        
+        // Full phrase matches get second priority
+        const aFullMatch = aName.includes(searchLower);
+        const bFullMatch = bName.includes(searchLower);
+        if (aFullMatch && !bFullMatch) return -1;
+        if (!aFullMatch && bFullMatch) return 1;
+        
+        // Sort by name length (shorter names first) for partial matches
+        return aName.length - bName.length;
+      });
+
+      // Remove duplicates while preserving sort order
+      return Array.from(new Map(sortedResults.map(item => 
         [item.char, item]
       )).values());
     }
