@@ -5,17 +5,7 @@ import { EmojiPicker } from '../components/EmojiPicker';
 import { HomeworkButton } from '../components/HomeworkButton';
 import { TutorialOverlay } from '../components/TutorialOverlay';
 import { Button } from '@/components/ui/button';
-import { Loader2, RotateCcw } from 'lucide-react';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+import { Loader2 } from 'lucide-react';
 import { useHapticFeedback } from '../hooks/useHapticFeedback';
 
 type GridRef = { reset: () => void };
@@ -24,7 +14,6 @@ export default function Home() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [loading, setLoading] = useState(true);
   const [showTutorial, setShowTutorial] = useState(false);
-  const [showResetDialog, setShowResetDialog] = useState(false);
   const triggerHaptic = useHapticFeedback();
 
   const morningGridRef = useRef<GridRef>(null);
@@ -54,14 +43,7 @@ export default function Home() {
     setShowTutorial(false);
   };
 
-  const handleReset = () => {
-    triggerHaptic();
-    // Reset all grid components
-    morningGridRef.current?.reset();
-    middayGridRef.current?.reset();
-    eveningGridRef.current?.reset();
-    homeworkButtonRef.current?.reset();
-  };
+  
 
   if (loading) {
     return (
@@ -81,36 +63,12 @@ export default function Home() {
           <h1 className="text-xl sm:text-2xl font-bold text-white">
             Emoji Dagplanner
           </h1>
-          <div className="flex items-center gap-4">
-            <time className="text-white">
-              {currentTime.toLocaleTimeString()}
-            </time>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setShowResetDialog(true)}
-              className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white"
-              aria-label="Reset planner"
-            >
-              <RotateCcw className="h-6 w-6" />
-            </Button>
-          </div>
+          <time className="text-white">
+            {currentTime.toLocaleTimeString()}
+          </time>
         </header>
 
-        <AlertDialog open={showResetDialog} onOpenChange={setShowResetDialog}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This will reset all your planned activities for the day. This action cannot be undone.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={handleReset}>Reset</AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+        
 
         <div className="space-y-2 sm:space-y-3">
           <PlaceholderGrid ref={morningGridRef} title="Morning" />
