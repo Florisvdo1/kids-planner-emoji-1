@@ -1,0 +1,52 @@
+**PreBakedPrompt for Replit Agent LLM:**  
+
+**Objective:**  
+Expand the existing emoji deck in the drag-and-drop emoji planner by adding more than 300 emojis organized into several categories. Focus the first set of categories on event-related emojis (e.g., driving, walking, yoga) for use in event-based planning. Ensure all new emojis integrate seamlessly with the default emoji deck and can be dragged, dropped, and categorized efficiently.
+
+**Detailed Instructions:**  
+
+1. **Emoji Deck Expansion:**  
+   - Add more than 300 new emojis to the emoji planner, grouped by categories for easy navigation.  
+   - Begin with event-related categories (e.g., "Activities," "Travel," "Sports," "Health & Wellness") containing relevant emojis. Examples:  
+     - **Activities:** 🧘‍♂️, 🚶‍♀️, 🎨, 🎭, 🎤  
+     - **Travel:** 🚗, ✈️, 🚢, 🚂, 🏍️  
+     - **Sports:** ⚽, 🏀, 🏓, 🏊‍♂️, 🚴‍♀️  
+     - **Health & Wellness:** 🛌, 🧘‍♀️, 🚶‍♂️, 💪, 🩺  
+
+2. **Category Organization:**  
+   - Organize emojis into clearly defined categories such as:  
+     - **Activities:** All task-based or hobby-related emojis.  
+     - **Travel:** Emojis related to transportation and destinations.  
+     - **Sports:** Emojis for games, physical activities, and competitions.  
+     - **Health & Wellness:** Emojis reflecting health, relaxation, and fitness.  
+     - Expand further categories to include **Food & Drink, Animals, Weather, Celebrations, and Tools**.  
+
+3. **Integration with Existing Deck:**  
+   - Ensure all new emojis are added to the default emoji deck without disrupting the drag-and-drop functionality.  
+   - Align new categories with the existing deck structure, using the same styling and organizational hierarchy.  
+
+4. **Drag-and-Drop Functionality:**  
+   - Ensure all newly added emojis are draggable and droppable into the event planner interface.  
+   - Test functionality across desktop, tablet, and mobile resolutions to maintain responsiveness.  
+
+5. **User Interface Adjustments:**  
+   - Update the emoji picker UI to accommodate the expanded emoji deck. Add category tabs or a scrolling feature for efficient navigation.  
+   - Use the same font and UI styling already implemented in the app for category headers and emoji labels.  
+
+6. **Testing and Validation:**  
+   - Verify all new emojis render correctly across all major browsers (Chrome, Firefox, Safari, Edge).  
+   - Test drag-and-drop functionality and confirm that all emojis align visually within the app's interface.  
+   - Ensure category filtering and scrolling work seamlessly on all devices.
+
+7. **Examples for Emoji Categories and Emojis:**  
+   - **Activities:** 🧘‍♂️ (Yoga), 🎭 (Drama), 🎨 (Painting)  
+   - **Travel:** 🚗 (Car), ✈️ (Airplane), 🚂 (Train)  
+   - **Sports:** ⚽ (Soccer), 🏊‍♂️ (Swimming), 🏀 (Basketball)  
+   - **Health & Wellness:** 🛌 (Rest), 🚶‍♂️ (Walking), 💪 (Strength Training)
+
+---
+
+**Validation Summary:**  
+- All 300+ emojis must be integrated and functional.  
+- Ensure category navigation, drag-and-drop interactions, and design consistency align with the app's existing standards.  
+- Prioritize user experience by maintaining a clean, responsive, and intuitive interface.
