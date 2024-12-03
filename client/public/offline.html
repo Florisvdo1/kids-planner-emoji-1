@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Offline - Emoji Day Planner</title>
     <style>
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
         body {
             font-family: system-ui, -apple-system, sans-serif;
             background-color: #87CEEB;
@@ -17,35 +29,96 @@
             margin: 0;
             padding: 20px;
             text-align: center;
+            overflow: hidden;
         }
         .container {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 2.5rem;
             backdrop-filter: blur(10px);
             max-width: 400px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: pulse 2s infinite ease-in-out;
         }
-        h1 { margin-bottom: 1rem; }
-        p { margin-bottom: 2rem; }
-        .emoji { font-size: 4rem; margin-bottom: 1rem; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="emoji">📡</div>
-        <h1>You're Offline</h1>
-        <p>Please check your internet connection and try again.</p>
-        <button onclick="window.location.reload()" style="
+        h1 { 
+            margin-bottom: 1rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+        p { 
+            margin-bottom: 2rem;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+        .emoji { 
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            animation: float 3s infinite ease-in-out;
+            display: inline-block;
+        }
+        button {
             background: white;
             color: #87CEEB;
             border: none;
             padding: 12px 24px;
-            border-radius: 6px;
+            border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-        ">
-            Try Again
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .clouds {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 4s infinite ease-in-out;
+        }
+        .cloud:nth-child(1) { width: 100px; height: 100px; top: 10%; left: 10%; animation-delay: 0s; }
+        .cloud:nth-child(2) { width: 80px; height: 80px; top: 20%; right: 15%; animation-delay: -1s; }
+        .cloud:nth-child(3) { width: 120px; height: 120px; bottom: 15%; left: 20%; animation-delay: -2s; }
+        .cloud:nth-child(4) { width: 90px; height: 90px; bottom: 25%; right: 25%; animation-delay: -3s; }
+    </style>
+</head>
+<body>
+    <div class="clouds">
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+    </div>
+    <div class="container">
+        <div class="emoji">📡</div>
+        <h1>You're Currently Offline</h1>
+        <p>Don't worry! Your emoji planner is still working with cached data. Reconnect to sync your latest changes.</p>
+        <button onclick="window.location.reload()">
+            Reconnect
         </button>
     </div>
+    <script>
+        // Check connection status periodically
+        setInterval(() => {
+            if (navigator.onLine) {
+                window.location.reload();
+            }
+        }, 5000);
+    </script>
 </body>
 </html>

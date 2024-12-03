@@ -8,8 +8,18 @@ const ASSETS_TO_CACHE = [
   '/icons/icon-512x512.png',
   '/assets/index.css',
   '/assets/index.js',
-  '/assets/fonts/PressStart2P-Regular.ttf'
+  '/assets/fonts/PressStart2P-Regular.ttf',
+  // Cache emoji data
+  '/lib/emojiData.js',
+  // Cache additional UI assets
+  '/assets/cloud-background.svg',
+  // Cache base icon
+  '/base-icon.svg'
 ];
+
+// Cache emoji images and additional dynamic content
+const EMOJI_CACHE_NAME = 'emoji-cache-v1';
+const DYNAMIC_CACHE_NAME = 'dynamic-cache-v1';
 
 // Install event - cache assets with improved error handling
 self.addEventListener('install', (event) => {
@@ -43,7 +53,27 @@ self.addEventListener('fetch', (event) => {
         // Return cached response if available
         if (response) {
           console.log('[ServiceWorker] Serving from cache:', event.request.url);
+          
+          // Fetch and cache updated version in background (stale-while-revalidate)
+          event.waitUntil(
+            fetch(event.request)
+              .then(networkResponse => {
+                if (networkResponse && networkResponse.status === 200) {
+                  const cache = caches.open(CACHE_NAME);
+                  cache.then(cache => cache.put(event.request, networkResponse.clone()));
+                }
+              })
+              .catch(error => console.log('[ServiceWorker] Background fetch failed:', error))
+          );
+          
           return response;
+        }
+
+        // Special handling for emoji data requests
+        if (event.request.url.includes('emojiData')) {
+          return caches.open(EMOJI_CACHE_NAME)
+            .then(cache => cache.match(event.request))
+            .then(response => response || fetch(event.request));
         }
 
         // Implement retry mechanism for network requests
