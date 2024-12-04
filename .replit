@@ -9,7 +9,7 @@ channel = "stable-24_05"
 deploymentTarget = "static"
 build = ["npm", "run", "build"]
 publicDir = "dist"
-run = ["sh", "-c", "cd client && npx vite --port 5000 --host 0.0.0.0"]
+run = ["sh", "-c", "npm run dev"]
 
 [[ports]]
 localPort = 5000
@@ -38,5 +38,5 @@ task = "packager.installForAll"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd client && npx vite --port 5000 --host 0.0.0.0"
+args = "npm run dev"
 waitForPort = 5000
