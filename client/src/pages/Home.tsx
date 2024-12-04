@@ -71,9 +71,9 @@ export default function Home() {
         
 
         <div className="space-y-2 sm:space-y-3">
-          <PlaceholderGrid ref={morningGridRef} title="Morning" />
-          <PlaceholderGrid ref={middayGridRef} title="Midday" />
-          <PlaceholderGrid ref={eveningGridRef} title="Evening" />
+          <PlaceholderGrid ref={morningGridRef} title="Morning" type="morning" />
+          <PlaceholderGrid ref={middayGridRef} title="Midday" type="midday" />
+          <PlaceholderGrid ref={eveningGridRef} title="Evening" type="evening" />
           <HomeworkButton ref={homeworkButtonRef} />
         </div>
         

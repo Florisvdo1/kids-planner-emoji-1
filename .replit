@@ -12,7 +12,11 @@ publicDir = "dist"
 run = ["sh", "-c", "npm run dev"]
 
 [[ports]]
+localPort = 3000
+
+[[ports]]
 localPort = 5000
+externalPort = 3000
 
 [workflows]
 runButton = "Project"
@@ -39,4 +43,4 @@ task = "packager.installForAll"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "npm run dev"
-waitForPort = 5000
+waitForPort = 3000

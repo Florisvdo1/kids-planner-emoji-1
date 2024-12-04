@@ -3,17 +3,27 @@ import { Button } from '@/components/ui/button';
 import { useHapticFeedback } from '../hooks/useHapticFeedback';
 
 export const HomeworkButton = forwardRef<{ reset: () => void }, {}>(({}, ref) => {
-  const [isChecked, setIsChecked] = useState(false);
+  const { dayPlan, updateDayPlan } = useDayPlan();
   const triggerHaptic = useHapticFeedback();
 
   useImperativeHandle(ref, () => ({
-    reset: () => setIsChecked(false)
+    reset: () => {
+      updateDayPlan({
+        ...dayPlan,
+        homework_completed: false,
+      });
+    }
   }));
 
   const handleToggle = () => {
     triggerHaptic();
-    setIsChecked(!isChecked);
+    updateDayPlan({
+      ...dayPlan,
+      homework_completed: !dayPlan?.homework_completed,
+    });
   };
+
+  const isChecked = dayPlan?.homework_completed ?? false;
 
   return (
     <Button
