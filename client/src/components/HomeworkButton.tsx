@@ -19,16 +19,16 @@ export const HomeworkButton = forwardRef<{ reset: () => void }, {}>(({}, ref) =>
     <Button
       variant="outline"
       className={`
-        w-full h-14 relative transition-all duration-300 overflow-visible
+        w-full h-14 relative transition-all duration-300 overflow-hidden
         ${isChecked ? 'bg-[#45d054] hover:bg-[#3cbd49]' : 'bg-[#FF5252] hover:bg-[#ff4040]'}
         text-white border-2 border-white/20
       `}
       onClick={handleToggle}
     >
-      <div className="flex items-center justify-center gap-3 relative">
+      <div className="flex items-center justify-center gap-3">
         {isChecked && (
           <div className="animate-wubble order-first">
-            <span className="text-3xl drop-shadow-lg">👍</span>
+            <span className="text-2xl drop-shadow-lg">👍</span>
           </div>
         )}
         <span className="text-lg tracking-wide">
