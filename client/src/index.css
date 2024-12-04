@@ -75,6 +75,13 @@ body.dragging {
   image-rendering: pixelated;
   transform-origin: center;
 }
+@keyframes wobble {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+  100% { transform: translateX(0); }
+}
+
 @supports (-webkit-touch-callout: none) {
   .has-bottom-bar {
     padding-bottom: env(safe-area-inset-bottom, 133px);

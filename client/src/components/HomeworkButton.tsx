@@ -27,7 +27,7 @@ export const HomeworkButton = forwardRef<{ reset: () => void }, {}>(({}, ref) =>
     >
       <div className="flex items-center justify-center gap-3">
         {isChecked && (
-          <div className="animate-wubble order-first">
+          <div className="animate-wobble order-first" style={{ animationIterationCount: '1' }}>
             <span className="text-2xl drop-shadow-lg">👍</span>
           </div>
         )}
