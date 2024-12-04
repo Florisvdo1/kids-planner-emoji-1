@@ -133,45 +133,20 @@ function Placeholder({ emoji, onDrop, index, onEmojiSwap, triggerHaptic }: Place
 
 interface PlaceholderGridProps {
   title: string;
-  type: 'morning' | 'midday' | 'evening';
 }
 
-export const PlaceholderGrid = forwardRef<{ reset: () => void }, PlaceholderGridProps>(({ title, type }, ref) => {
-  const { dayPlan, updateDayPlan } = useDayPlan();
+export const PlaceholderGrid = forwardRef<{ reset: () => void }, PlaceholderGridProps>(({ title }, ref) => {
   const [placeholders, setPlaceholders] = useState<(string | null)[]>([null]);
   const triggerHaptic = useHapticFeedback();
 
-  // Initialize placeholders from dayPlan
-  useEffect(() => {
-    if (dayPlan) {
-      const emojis = dayPlan[`${type}_emojis`] as string[];
-      setPlaceholders(emojis.length > 0 ? emojis : [null]);
-    }
-  }, [dayPlan, type]);
-
   useImperativeHandle(ref, () => ({
-    reset: () => {
-      setPlaceholders([null]);
-      updateDayPlan({
-        ...dayPlan,
-        [`${type}_emojis`]: [],
-        homework_completed: dayPlan?.homework_completed ?? false,
-      });
-    }
+    reset: () => setPlaceholders([null])
   }));
 
   const handleAddPlaceholder = () => {
     if (placeholders.length < 5) {
       triggerHaptic();
-      const newPlaceholders = [...placeholders, null];
-      setPlaceholders(newPlaceholders);
-      
-      // Update backend
-      updateDayPlan({
-        ...dayPlan,
-        [`${type}_emojis`]: newPlaceholders.filter((p): p is string => p !== null),
-        homework_completed: dayPlan?.homework_completed ?? false,
-      });
+      setPlaceholders([...placeholders, null]);
     }
   };
 
@@ -180,13 +155,6 @@ export const PlaceholderGrid = forwardRef<{ reset: () => void }, PlaceholderGrid
     const newPlaceholders = [...placeholders];
     newPlaceholders[index] = item.emoji;
     setPlaceholders(newPlaceholders);
-    
-    // Update backend
-    updateDayPlan({
-      ...dayPlan,
-      [`${type}_emojis`]: newPlaceholders.filter((p): p is string => p !== null),
-      homework_completed: dayPlan?.homework_completed ?? false,
-    });
   };
 
   const handleEmojiSwap = (fromIndex: number, toIndex: number) => {
@@ -196,13 +164,6 @@ export const PlaceholderGrid = forwardRef<{ reset: () => void }, PlaceholderGrid
     newPlaceholders[fromIndex] = newPlaceholders[toIndex];
     newPlaceholders[toIndex] = temp;
     setPlaceholders(newPlaceholders);
-    
-    // Update backend
-    updateDayPlan({
-      ...dayPlan,
-      [`${type}_emojis`]: newPlaceholders.filter((p): p is string => p !== null),
-      homework_completed: dayPlan?.homework_completed ?? false,
-    });
   };
 
   return (

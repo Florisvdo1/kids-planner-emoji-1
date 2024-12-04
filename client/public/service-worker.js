@@ -1,4 +1,4 @@
-const CACHE_NAME = 'emoji-planner-v2';
+const CACHE_NAME = 'emoji-planner-v1';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
