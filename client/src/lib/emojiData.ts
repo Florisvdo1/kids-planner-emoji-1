@@ -1,23 +1,60 @@
 export const emojiCategories = [
   {
-    name: "Activities",
+    name: "Celebrations & Events",
     emojis: [
-      { char: "🎨", name: "art" },
-      { char: "🎭", name: "performing arts" },
+      { char: "🎉", name: "party popper" },
+      { char: "🎊", name: "confetti ball" },
+      { char: "🎂", name: "birthday cake" },
+      { char: "🎈", name: "balloon" },
+      { char: "🎗️", name: "reminder ribbon" },
+      { char: "🎖️", name: "military medal" },
+      { char: "🏆", name: "trophy" },
+      { char: "👰", name: "wedding" },
+      { char: "🎓", name: "graduation" },
       { char: "🎪", name: "circus" },
-      { char: "🎤", name: "singing" },
-      { char: "🎼", name: "music" },
-      { char: "🎧", name: "listening to music" },
+      { char: "🎭", name: "performing arts" },
+      { char: "🎨", name: "art exhibition" },
+      { char: "🎄", name: "christmas" },
+      { char: "🎃", name: "halloween" },
+      { char: "✨", name: "sparkles" }
+    ]
+  },
+  {
+    name: "Time & Schedule",
+    emojis: [
+      { char: "⏰", name: "alarm clock" },
+      { char: "⌚", name: "watch" },
+      { char: "📅", name: "calendar" },
+      { char: "📆", name: "tear-off calendar" },
+      { char: "🗓️", name: "spiral calendar" },
+      { char: "⏳", name: "hourglass" },
+      { char: "⌛", name: "hourglass done" },
+      { char: "⏱️", name: "stopwatch" },
+      { char: "🕐", name: "one o'clock" },
+      { char: "🕧", name: "twelve-thirty" },
+      { char: "📊", name: "schedule chart" },
+      { char: "📈", name: "increasing trend" },
+      { char: "🗑️", name: "delete schedule" }
+    ]
+  },
+  {
+    name: "Daily Activities",
+    emojis: [
+      { char: "🛏️", name: "wake up" },
+      { char: "🚿", name: "shower" },
+      { char: "🦷", name: "brush teeth" },
+      { char: "🍳", name: "cooking" },
+      { char: "🧹", name: "cleaning" },
+      { char: "🧺", name: "laundry" },
+      { char: "📱", name: "phone call" },
+      { char: "💻", name: "work" },
+      { char: "📝", name: "note taking" },
+      { char: "🚶", name: "walking" },
+      { char: "🏃", name: "running" },
+      { char: "🛒", name: "shopping" },
       { char: "🎮", name: "gaming" },
-      { char: "🎲", name: "games" },
-      { char: "🎯", name: "target" },
-      { char: "🎳", name: "bowling" },
-      { char: "🎩", name: "magic show" },
-      { char: "📚", name: "reading" },
-      { char: "✏️", name: "writing" },
-      { char: "👨‍🏫", name: "teaching" },
-      { char: "👨‍💻", name: "coding" },
-      { char: "🎵", name: "musical notes" }
+      { char: "📺", name: "watching tv" },
+      { char: "🛁", name: "bath" }
     ]
   },
   {
@@ -126,24 +163,60 @@ export const emojiCategories = [
     ]
   },
   {
-    name: "Emotions",
+    name: "Social Events",
     emojis: [
-      { char: "😀", name: "happy" },
-      { char: "😃", name: "joyful" },
-      { char: "😄", name: "laughing" },
-      { char: "😊", name: "smiling" },
-      { char: "🥰", name: "loving" },
-      { char: "😎", name: "cool" },
-      { char: "😴", name: "sleeping" },
-      { char: "🤔", name: "thinking" },
-      { char: "😂", name: "tears of joy" },
-      { char: "🥳", name: "partying" },
-      { char: "😋", name: "yummy" },
-      { char: "😇", name: "innocent" },
-      { char: "🤗", name: "hugging" },
-      { char: "😌", name: "relieved" },
-      { char: "😍", name: "loving" },
-      { char: "🥺", name: "pleading" }
+      { char: "🎥", name: "movie night" },
+      { char: "🍽️", name: "dinner party" },
+      { char: "🎰", name: "game night" },
+      { char: "🎤", name: "karaoke" },
+      { char: "🎸", name: "concert" },
+      { char: "🎭", name: "theater" },
+      { char: "🏟️", name: "stadium event" },
+      { char: "🎪", name: "circus show" },
+      { char: "🎨", name: "art gallery" },
+      { char: "🎳", name: "bowling night" },
+      { char: "🎯", name: "darts night" },
+      { char: "🎲", name: "board game night" },
+      { char: "🎮", name: "gaming party" },
+      { char: "🍻", name: "social gathering" }
+    ]
+  },
+  {
+    name: "Entertainment Events",
+    emojis: [
+      { char: "🎬", name: "movie premiere" },
+      { char: "🎪", name: "circus" },
+      { char: "🎭", name: "theater show" },
+      { char: "🎪", name: "carnival" },
+      { char: "🎡", name: "theme park" },
+      { char: "🎢", name: "roller coaster" },
+      { char: "🎫", name: "ticket" },
+      { char: "🎪", name: "fair" },
+      { char: "🎭", name: "musical" },
+      { char: "🎨", name: "art show" },
+      { char: "🎼", name: "orchestra" },
+      { char: "🎵", name: "music festival" },
+      { char: "🎪", name: "magic show" },
+      { char: "🎭", name: "dance show" }
+    ]
+  },
+  {
+    name: "Educational Events",
+    emojis: [
+      { char: "📚", name: "study session" },
+      { char: "🎓", name: "graduation" },
+      { char: "📝", name: "exam" },
+      { char: "📖", name: "reading" },
+      { char: "✏️", name: "writing" },
+      { char: "🔬", name: "science lab" },
+      { char: "🎨", name: "art class" },
+      { char: "🎵", name: "music class" },
+      { char: "💻", name: "computer class" },
+      { char: "🗣️", name: "presentation" },
+      { char: "📊", name: "group project" },
+      { char: "🎭", name: "drama class" },
+      { char: "📓", name: "lecture" },
+      { char: "🏫", name: "school event" }
     ]
   }
 ];
