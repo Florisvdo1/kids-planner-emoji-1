@@ -2,54 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="theme-color" content="#87CEEB" />
-    <meta name="description" content="Plan your day with emojis - An intuitive emoji-based day planner" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="Emoji Planner" />
-    
-    <link rel="manifest" href="/manifest.json" />
-    <link rel="icon" type="image/svg+xml" href="/base-icon.svg" />
-    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
-    
-    <title>Emoji Day Planner</title>
-    
-    <!-- iOS splash screen images -->
-    <link rel="apple-touch-startup-image" href="/icons/icon-512x512.png" />
-    
-    <!-- Preload key assets -->
-    <link rel="preload" href="/assets/index.css" as="style" />
-    <link rel="preload" href="/assets/index.js" as="script" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    
-    <!-- Offline status notification -->
-    <div id="offline-status" 
-         style="display: none; position: fixed; bottom: 16px; left: 16px; right: 16px; 
-                background: rgba(0, 0, 0, 0.8); color: white; padding: 12px; 
-                border-radius: 8px; text-align: center; z-index: 9999;">
-      You are currently offline. Some features may be limited.
-    </div>
-
-    <script>
-      // Monitor online/offline status
-      function updateOnlineStatus() {
-        const status = document.getElementById('offline-status');
-        if (!navigator.onLine) {
-          status.style.display = 'block';
-        } else {
-          status.style.display = 'none';
-        }
-      }
-
-      window.addEventListener('online', updateOnlineStatus);
-      window.addEventListener('offline', updateOnlineStatus);
-      
-      // Check initial status
-      updateOnlineStatus();
-    </script>
   </body>
 </html>

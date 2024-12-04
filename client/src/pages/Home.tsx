@@ -5,9 +5,8 @@ import { EmojiPicker } from '../components/EmojiPicker';
 import { HomeworkButton } from '../components/HomeworkButton';
 import { TutorialOverlay } from '../components/TutorialOverlay';
 import { Button } from '@/components/ui/button';
-import { Loader2, Wifi, WifiOff } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { useHapticFeedback } from '../hooks/useHapticFeedback';
-import { useOfflineStorage } from '../hooks/useOfflineStorage';
 
 type GridRef = { reset: () => void };
 
@@ -22,9 +21,6 @@ export default function Home() {
   const eveningGridRef = useRef<GridRef>(null);
   const homeworkButtonRef = useRef<GridRef>(null);
 
-  const { saveData, loadData, isLoading: isStorageLoading } = useOfflineStorage();
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
-
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
@@ -37,44 +33,11 @@ export default function Home() {
       localStorage.setItem('hasVisitedBefore', 'true');
     }
 
-    // Load saved data
-    const loadSavedData = async () => {
-      const savedData = await loadData();
-      if (savedData) {
-        morningGridRef.current?.setEmojis?.(savedData.morningEmojis);
-        middayGridRef.current?.setEmojis?.(savedData.middayEmojis);
-        eveningGridRef.current?.setEmojis?.(savedData.eveningEmojis);
-        homeworkButtonRef.current?.setChecked?.(savedData.homeworkCompleted);
-      }
-      setLoading(false);
-    };
+    // Simulate loading
+    setTimeout(() => setLoading(false), 1000);
 
-    loadSavedData();
-
-    // Setup online/offline detection
-    const handleOnlineStatus = () => {
-      setIsOnline(navigator.onLine);
-    };
-
-    window.addEventListener('online', handleOnlineStatus);
-    window.addEventListener('offline', handleOnlineStatus);
-
-    return () => {
-      clearInterval(timer);
-      window.removeEventListener('online', handleOnlineStatus);
-      window.removeEventListener('offline', handleOnlineStatus);
-    };
-  }, [loadData]);
-
-  // Save data when it changes
-  const handleDataChange = async () => {
-    await saveData({
-      morningEmojis: morningGridRef.current?.getEmojis?.() || [],
-      middayEmojis: middayGridRef.current?.getEmojis?.() || [],
-      eveningEmojis: eveningGridRef.current?.getEmojis?.() || [],
-      homeworkCompleted: homeworkButtonRef.current?.isChecked?.() || false,
-    });
-  };
+    return () => clearInterval(timer);
+  }, []);
 
   const handleCloseTutorial = () => {
     setShowTutorial(false);
@@ -97,23 +60,12 @@ export default function Home() {
       
       <main className="container mx-auto px-1.5 sm:px-3 lg:px-4 flex-1 overflow-hidden relative z-10 pb-0">
         <header className="flex justify-between items-center mb-4 sm:mb-6">
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl sm:text-2xl font-bold text-white">
-              Emoji Dagplanner
-            </h1>
-            {!isOnline && (
-              <div className="flex items-center gap-1 bg-white/20 px-2 py-1 rounded-full">
-                <WifiOff className="w-4 h-4 text-white" />
-                <span className="text-sm text-white">Offline</span>
-              </div>
-            )}
-          </div>
-          <div className="flex items-center gap-3">
-            <time className="text-white">
-              {currentTime.toLocaleTimeString()}
-            </time>
-            {isOnline && <Wifi className="w-4 h-4 text-white" />}
-          </div>
+          <h1 className="text-xl sm:text-2xl font-bold text-white">
+            Emoji Dagplanner
+          </h1>
+          <time className="text-white">
+            {currentTime.toLocaleTimeString()}
+          </time>
         </header>
 
         

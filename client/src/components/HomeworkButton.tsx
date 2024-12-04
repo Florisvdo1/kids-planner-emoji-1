@@ -2,32 +2,13 @@ import { useState, forwardRef, useImperativeHandle } from 'react';
 import { Button } from '@/components/ui/button';
 import { useHapticFeedback } from '../hooks/useHapticFeedback';
 
-interface HomeworkButtonProps {
-  onDataChange?: () => void;
-}
-
-export const HomeworkButton = forwardRef<{
-  reset: () => void;
-  setChecked: (checked: boolean) => void;
-  isChecked: () => boolean;
-}, HomeworkButtonProps>(({ onDataChange }, ref) => {
+export const HomeworkButton = forwardRef<{ reset: () => void }, {}>(({}, ref) => {
   const [isChecked, setIsChecked] = useState(false);
   const triggerHaptic = useHapticFeedback();
 
   useImperativeHandle(ref, () => ({
-    reset: () => {
-      setIsChecked(false);
-      onDataChange?.();
-    },
-    setChecked: (checked: boolean) => {
-      setIsChecked(checked);
-    },
-    isChecked: () => isChecked
+    reset: () => setIsChecked(false)
   }));
-
-  useEffect(() => {
-    onDataChange?.();
-  }, [isChecked, onDataChange]);
 
   const handleToggle = () => {
     triggerHaptic();

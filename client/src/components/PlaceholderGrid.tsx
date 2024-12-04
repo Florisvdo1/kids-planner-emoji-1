@@ -135,28 +135,13 @@ interface PlaceholderGridProps {
   title: string;
 }
 
-export const PlaceholderGrid = forwardRef<{
-  reset: () => void;
-  setEmojis: (emojis: (string | null)[]) => void;
-  getEmojis: () => (string | null)[];
-}, PlaceholderGridProps>(({ title, onDataChange }, ref) => {
+export const PlaceholderGrid = forwardRef<{ reset: () => void }, PlaceholderGridProps>(({ title }, ref) => {
   const [placeholders, setPlaceholders] = useState<(string | null)[]>([null]);
   const triggerHaptic = useHapticFeedback();
 
   useImperativeHandle(ref, () => ({
-    reset: () => {
-      setPlaceholders([null]);
-      onDataChange?.();
-    },
-    setEmojis: (emojis: (string | null)[]) => {
-      setPlaceholders(emojis);
-    },
-    getEmojis: () => placeholders
+    reset: () => setPlaceholders([null])
   }));
-
-  useEffect(() => {
-    onDataChange?.();
-  }, [placeholders, onDataChange]);
 
   const handleAddPlaceholder = () => {
     if (placeholders.length < 5) {
