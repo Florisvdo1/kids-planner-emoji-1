@@ -75,34 +75,6 @@ body.dragging {
   image-rendering: pixelated;
   transform-origin: center;
 }
-/* Offline mode styles */
-.offline .online-only {
-  display: none;
-}
-
-.offline::before {
-  content: "You're offline";
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background-color: #FF5252;
-  color: white;
-  text-align: center;
-  padding: 0.5rem;
-  z-index: 50;
-  font-size: 0.875rem;
-}
-
-/* Update notification animation */
-@keyframes slideIn {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
-}
-
-.fixed.bottom-4 {
-  animation: slideIn 0.3s ease-out;
-}
 @keyframes wobble {
   0% { transform: translateX(0); }
   25% { transform: translateX(-6px); }
