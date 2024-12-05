@@ -6,9 +6,13 @@ hidden = [".config", ".git", "generated-icon.png", "node_modules", "dist"]
 channel = "stable-24_05"
 
 [deployment]
-deploymentTarget = "static"
+deploymentTarget = "gce"
 build = ["npm", "run", "build"]
-publicDir = "dist"
+run = ["sh", "-c", "emoji"]
+
+[[ports]]
+localPort = 3000
+externalPort = 5000
 
 [[ports]]
 localPort = 5000
@@ -26,8 +30,139 @@ author = "agent"
 task = "workflow.run"
 args = "App"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Build"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Generate Icons"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Dev Server"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Development"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Development Server"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "App Server"
+
 [[workflows.workflow]]
 name = "App"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "vite --port 3000 --host"
+waitForPort = 3000
+
+[[workflows.workflow]]
+name = "Build"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run build"
+
+[[workflows.workflow]]
+name = "Start"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm start"
+waitForPort = 80
+
+[[workflows.workflow]]
+name = "Generate Icons"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "node scripts/generate-icons.js"
+
+[[workflows.workflow]]
+name = "Dev Server"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run dev"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "Development"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run dev"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "Development Server"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run dev"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "App Server"
 author = "agent"
 
 [workflows.workflow.metadata]

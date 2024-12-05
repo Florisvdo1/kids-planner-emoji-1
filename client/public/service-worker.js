@@ -8,13 +8,20 @@ const ASSETS_TO_CACHE = [
   '/icons/icon-512x512.png',
   '/assets/index.css',
   '/assets/index.js',
-  '/assets/fonts/PressStart2P-Regular.ttf',
-  // Cache emoji data
-  '/lib/emojiData.js',
-  // Cache additional UI assets
+  // Cache all emoji data
+  '/src/lib/emojiData.ts',
+  // Cache UI components
+  '/src/components/EmojiPicker.tsx',
+  '/src/components/HomeworkButton.tsx',
+  '/src/components/PlaceholderGrid.tsx',
+  // Cache UI assets and icons
   '/assets/cloud-background.svg',
-  // Cache base icon
-  '/base-icon.svg'
+  '/base-icon.svg',
+  // Cache fonts
+  '/assets/fonts/PressStart2P-Regular.ttf',
+  // Cache the complete app shell
+  '/src/main.tsx',
+  '/src/index.css'
 ];
 
 // Cache emoji images and additional dynamic content
@@ -103,12 +110,26 @@ self.addEventListener('fetch', (event) => {
               
               // Return offline page for navigation requests
               if (event.request.mode === 'navigate') {
-                return caches.match('/offline.html');
+                const offlineResponse = await caches.match('/offline.html');
+                if (offlineResponse) {
+                  return offlineResponse;
+                }
               }
               
+              // Try to return a cached version of the resource
+              const cachedResponse = await caches.match(event.request);
+              if (cachedResponse) {
+                return cachedResponse;
+              }
+              
+              // If no cached version available, return a generic offline response
               return new Response('Offline content not available', {
                 status: 503,
-                statusText: 'Service Unavailable'
+                statusText: 'Service Unavailable',
+                headers: new Headers({
+                  'Content-Type': 'text/plain',
+                  'Cache-Control': 'no-store'
+                })
               });
             }
             

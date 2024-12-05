@@ -70,27 +70,56 @@ createRoot(document.getElementById("root")!).render(
     </QueryClientProvider>
   </StrictMode>,
 );
-// Register Service Worker
+// Register Service Worker with enhanced offline support
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js', {
-      scope: '/',
-      updateViaCache: 'none'
-    })
-      .then(registration => {
-        console.log('ServiceWorker registration successful with scope:', registration.scope);
-        
-        registration.addEventListener('updatefound', () => {
-          const newWorker = registration.installing;
-          if (newWorker) {
-            newWorker.addEventListener('statechange', () => {
-              console.log('ServiceWorker state changed:', newWorker.state);
-            });
-          }
-        });
-      })
-      .catch(error => {
-        console.error('ServiceWorker registration failed:', error.message);
+  window.addEventListener('load', async () => {
+    try {
+      const registration = await navigator.serviceWorker.register('/service-worker.js', {
+        scope: '/',
+        updateViaCache: 'none'
       });
+      
+      console.log('ServiceWorker registration successful with scope:', registration.scope);
+      
+      // Handle updates
+      registration.addEventListener('updatefound', () => {
+        const newWorker = registration.installing;
+        if (newWorker) {
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              // New content is available
+              const notification = document.createElement('div');
+              notification.className = 'fixed bottom-4 left-4 right-4 bg-primary text-white p-4 rounded-lg shadow-lg z-50 flex justify-between items-center';
+              notification.innerHTML = `
+                <span>New content is available! Click to update.</span>
+                <button class="px-4 py-2 bg-white/20 rounded hover:bg-white/30 transition-colors">
+                  Update
+                </button>
+              `;
+              
+              notification.querySelector('button')?.addEventListener('click', () => {
+                newWorker.postMessage({ type: 'SKIP_WAITING' });
+                window.location.reload();
+              });
+              
+              document.body.appendChild(notification);
+            }
+          });
+        }
+      });
+      
+      // Handle offline/online status changes
+      window.addEventListener('online', () => {
+        document.body.classList.remove('offline');
+        registration.update(); // Check for updates when coming back online
+      });
+      
+      window.addEventListener('offline', () => {
+        document.body.classList.add('offline');
+      });
+      
+    } catch (error) {
+      console.error('ServiceWorker registration failed:', error instanceof Error ? error.message : 'Unknown error');
+    }
   });
 }
